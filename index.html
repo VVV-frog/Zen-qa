@@ -2,140 +2,220 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>八万四千问 - 宗萨钦哲仁波切</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>八万四千问 · 宗萨钦哲仁波切</title>
     <style>
         :root {
-            --bg-color: #f7f3f0;
-            --accent-color: #8c2c2c; /* 藏红色 */
-            --text-color: #333;
-            --border-color: #d1c7bc;
+            --clay: #f4f0e8;
+            --maroon: #8c2c2c;
+            --ink: #2c2c2c;
+            --soft-gray: #999;
         }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: "PingFang SC", "Microsoft YaHei", serif;
+            background-color: var(--clay);
+            background-image: radial-gradient(#d1c7bc 0.5px, transparent 0.5px);
+            background-size: 20px 20px; /* 细微的点状纹理 */
+            color: var(--ink);
+            font-family: "PingFang SC", "Noto Serif SC", "Microsoft YaHei", serif;
             margin: 0;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             height: 100vh;
+            overflow: hidden; /* 防止手机端回弹干扰 */
         }
-        .container {
-            width: 90%;
-            max-width: 600px;
+
+        .app-container {
+            width: 100%;
+            max-width: 500px;
             display: flex;
             flex-direction: column;
             height: 100%;
-            padding: 20px 0;
+            position: relative;
         }
+
+        /* 头部装饰 */
         header {
+            padding: 40px 20px 20px;
             text-align: center;
-            margin-bottom: 30px;
         }
+
         header h1 {
-            font-size: 24px;
-            color: var(--accent-color);
-            letter-spacing: 4px;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.5rem;
+            color: var(--maroon);
+            margin: 0;
         }
-        header p {
-            font-size: 14px;
-            color: #666;
-            font-style: italic;
+
+        header .subtitle {
+            font-size: 0.75rem;
+            color: var(--soft-gray);
+            margin-top: 10px;
+            letter-spacing: 0.1rem;
         }
+
+        /* 聊天窗口区域 */
         #chat-window {
             flex: 1;
             overflow-y: auto;
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 8px;
-            margin-bottom: 20px;
+            padding: 20px;
+            mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+            -webkit-overflow-scrolling: touch;
         }
-        .message {
-            margin-bottom: 15px;
+
+        .msg-group {
+            margin-bottom: 24px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .msg {
+            max-width: 85%;
+            padding: 12px 16px;
+            font-size: 1rem;
             line-height: 1.6;
+            margin-bottom: 4px;
         }
-        .user-msg { color: #555; font-weight: bold; }
-        .user-msg::before { content: "问："; color: var(--accent-color); }
-        .bot-msg { color: var(--text-color); padding-left: 10px; border-left: 2px solid var(--accent-color); }
-        .bot-msg::before { content: "仁波切：\n"; font-size: 12px; color: #888; display: block; }
-        
-        .input-area {
+
+        .user-msg {
+            margin-left: auto;
+            background: #fff;
+            border-radius: 18px 18px 0 18px;
+            color: var(--ink);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: right;
+        }
+
+        .bot-msg {
+            margin-right: auto;
+            background: transparent;
+            border-left: 2px solid var(--maroon);
+            color: var(--ink);
+            padding-left: 15px;
+            font-weight: 400;
+        }
+
+        /* 输入区域 - 移动端友好 */
+        .input-bar {
+            padding: 20px;
+            background: rgba(244, 240, 232, 0.8);
+            backdrop-filter: blur(10px);
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            align-items: center;
+            border-top: 1px solid rgba(0,0,0,0.05);
         }
+
         input {
             flex: 1;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            outline: none;
-            background: #fff;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: var(--accent-color);
-            color: white;
+            height: 48px;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            background: #fff;
+            border-radius: 24px;
+            padding: 0 20px;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
         }
+
+        button {
+            width: 48px;
+            height: 48px;
+            background: var(--maroon);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.9);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 隐藏滚动条 */
+        #chat-window::-webkit-scrollbar { width: 0; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>八万四千问</h1>
-            <p>“佛法是获得解脱和自由之道”</p>
-        </header>
-        <div id="chat-window">
-            <div class="message bot-msg">有什么我可以帮到你的吗？关于因果、轮回，或是那些让你困惑的日常琐事。</div>
-        </div>
-        <div class="input-area">
-            <input type="text" id="user-input" placeholder="输入你的困惑...">
-            <button onclick="ask()">启问</button>
+
+<div class="app-container">
+    <header>
+        <h1>八萬四千問</h1>
+        <div class="subtitle">与智慧对谈 · 宗萨钦哲仁波切</div>
+    </header>
+
+    <div id="chat-window">
+        <div class="msg-group">
+            <div class="msg bot-msg">世界很喧嚣，你有什么想问的？</div>
         </div>
     </div>
 
-    <script>
-        // 这里可以预设一些书中的经典问答
-        const qa_database = [
-            { q: "自由", a: "如果你明白‘一切和合的事物都是无常的’，你就被解放了，而不是被某种行为准则所束缚。 [cite: 6]" },
-            { q: "孤独", a: "你感到孤单和无聊，所以想要一个伴侣；而你也是自私的，所以想要独立。 " },
-            { q: "命运", a: "你有能力去拥有你想要的那种命运，这取决于你自己。因缘既是自由意志又是命运。 [cite: 9]" },
-            { q: "善良", a: "修行佛法不仅是为了成为一个好人，更是为了了悟真理。 [cite: 5]" }
-        ];
+    <div class="input-bar">
+        <input type="text" id="user-input" placeholder="输入困惑..." onkeypress="if(event.keyCode==13) ask()">
+        <button onclick="ask()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+    </div>
+</div>
 
-        function ask() {
-            const input = document.getElementById('user-input');
-            const chatWindow = document.getElementById('chat-window');
-            if(!input.value) return;
+<script>
+    // 这里预留知识库逻辑
+    const qa_database = [
+        { q: "自由", a: "如果你明白‘一切和合的事物都是无常的’，你就被解放了，而不是被某种行为准则所束缚。" },
+        { q: "孤独", a: "你感到孤单和无聊，所以想要一个伴侣；而你也是自私的，所以想要独立。这是我们共同的纠结。" },
+        { q: "命运", a: "你有能力去拥有你想要的那种命运。因缘既是自由意志又是命运，它是你过去创造的结果。" }
+    ];
 
-            // 显示用户问题
-            chatWindow.innerHTML += `<div class="message user-msg">${input.value}</div>`;
+    function ask() {
+        const input = document.getElementById('user-input');
+        const chatWindow = document.getElementById('chat-window');
+        const val = input.value.trim();
+        if(!val) return;
+
+        // 用户消息
+        const userGroup = document.createElement('div');
+        userGroup.className = 'msg-group';
+        userGroup.innerHTML = `<div class="msg user-msg">${val}</div>`;
+        chatWindow.appendChild(userGroup);
+
+        // 清空输入
+        input.value = '';
+
+        // 模拟思考并回复
+        setTimeout(() => {
+            let reply = "仁波切在书中曾提到：我们往往在寻找真相，却又害怕真相。你可以尝试从‘因缘’的角度去思考这个问题。";
             
-            // 简单的逻辑匹配（实际开发中可对接AI）
-            let response = "仁波切曾说：我们总是会陷入想要抓住些什么的圈套中。你可以尝试更深入地理解‘因缘’。 [cite: 6]";
             for(let item of qa_database) {
-                if(input.value.includes(item.q)) {
-                    response = item.a;
+                if(val.includes(item.q)) {
+                    reply = item.a;
                     break;
                 }
             }
 
-            setTimeout(() => {
-                chatWindow.innerHTML += `<div class="message bot-msg">${response}</div>`;
-                chatWindow.scrollTop = chatWindow.scrollHeight;
-            }, 500);
-
-            input.value = '';
-        }
-    </script>
-</body>
-</html>
-
-
+            const botGroup = document.createElement('div');
+            botGroup.className = 'msg-group';
+            botGroup.innerHTML = `<div class="msg bot-msg">${reply}</div>`;
+            chatWindow.appendChild(botGroup);
+            
+            // 滚动到底部
+            chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' });
+        }, 600);
+    }
+</script>
 <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
 <script>
   new CozeWebSDK.WebChatClient({
@@ -154,3 +234,8 @@
     }
   });
 </script>
+</body>
+</html>
+
+
+
