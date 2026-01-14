@@ -9,190 +9,92 @@
             --clay: #f2ede4; 
             --maroon: #8c2c2c; 
             --ink: #3a3530; 
-            --border: #dcd3c1;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
-            height: 100%;
+        body, html {
             margin: 0;
             padding: 0;
-            overflow: hidden; /* 防止页面整体滚动，只允许聊天区滚动 */
-        }
-
-        body {
-            background-color: var(--clay);
-            background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png'); 
-            color: var(--ink);
-            font-family: "Optima", "PingFang SC", "Noto Serif SC", serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .app-container {
+            height: 100%;
             width: 100%;
-            max-width: 500px;
-            height: 100dvh; /* 使用 dvh 适配移动端动态视口 */
+            background-color: var(--clay);
+            /* 禅意背景纹理 */
+            background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png');
+            font-family: "Optima", "PingFang SC", "serif";
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            position: relative;
-            background: rgba(242, 237, 228, 0.6);
         }
 
-        /* 顶部装饰 */
+        /* 顶部装饰栏 */
         .zen-header {
-            padding-top: 20px;
-            flex-shrink: 0;
+            padding: 20px 0 10px;
             text-align: center;
+            flex-shrink: 0;
+            z-index: 10;
         }
 
         .zen-symbol {
-            width: 40px;
-            height: 40px;
-            opacity: 0.6;
+            width: 35px;
+            height: 35px;
+            opacity: 0.7;
         }
 
         header h1 {
             font-size: 1.2rem;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             color: var(--maroon);
-            margin: 5px 0 0;
+            margin: 5px 0;
+            font-weight: 400;
         }
 
-        /* 对话区域 - 自动撑开 */
-        #chat-window {
+        /* Coze 对话框容器 - 填满剩余空间 */
+        #coze-chat-container {
             flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            -webkit-overflow-scrolling: touch;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
         }
 
-        #chat-window::-webkit-scrollbar { display: none; }
-
-        .msg-group {
-            margin-bottom: 20px;
-            animation: fadeIn 0.6s ease-out;
-            clear: both;
-        }
-
-        .msg {
-            max-width: 85%;
-            padding: 12px 15px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            word-wrap: break-word;
-        }
-
-        .user-msg {
-            float: right;
-            background: rgba(255, 255, 255, 0.5);
-            border: 0.5px solid var(--border);
-            border-radius: 4px;
-        }
-
-        .bot-msg {
-            float: left;
-            border-left: 1.5px solid var(--maroon);
-            padding-left: 12px;
-            background: transparent;
-        }
-
-        /* 底部输入框区域 - 确保在移动端可见 */
-        .input-bar {
-            flex-shrink: 0;
-            padding: 15px 20px 30px; /* 底部留白适配手机 Home 条 */
-            background: var(--clay);
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            border-top: 0.5px solid var(--border);
-        }
-
-        input {
-            flex: 1;
-            height: 44px;
-            border: none;
-            border-bottom: 1px solid var(--border);
-            background: transparent;
-            padding: 0 5px;
-            font-size: 16px; /* 防止 iOS 自动放大 */
-            outline: none;
-            color: var(--ink);
-        }
-
-        button {
-            background: var(--maroon);
-            border: none;
-            color: white;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(140, 44, 44, 0.2);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .clearfix::after {
-            content: "";
-            display: table;
-            clear: both;
+        /* 修正 Coze 内部样式，使其融入网页 */
+        iframe {
+            background: transparent !important;
         }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div class="zen-header">
-        <svg class="zen-symbol" viewBox="0 0 100 100">
-            <path d="M50 15 A 35 35 0 1 0 85 50" fill="none" stroke="#8c2c2c" stroke-width="2" stroke-linecap="round" />
-        </svg>
-        <header>
-            <h1>八萬四千問</h1>
-        </header>
-    </div>
-
-    <div id="chat-window" class="clearfix">
-        <div class="msg-group clearfix">
-            <div class="msg bot-msg">见地、修道、行持。有什么我可以帮你的？</div>
-        </div>
-    </div>
-
-    <div class="input-bar">
-        <input type="text" id="user-input" placeholder="输入你的困惑..." onkeypress="if(event.keyCode==13) ask()">
-        <button onclick="ask()" id="send-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-        </button>
-    </div>
+<div class="zen-header">
+    <svg class="zen-symbol" viewBox="0 0 100 100">
+        <path d="M50 15 A 35 35 0 1 0 85 50" fill="none" stroke="#8c2c2c" stroke-width="2" stroke-linecap="round" />
+    </svg>
+    <header>
+        <h1>八萬四千問</h1>
+    </header>
 </div>
 
+<div id="coze-chat-container"></div>
 
 <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
+
 <script>
+  // 初始化 Coze Web Chat
   new CozeWebSDK.WebChatClient({
     config: {
-      bot_id: '7595129987297378310',
+      bot_id: '7595129987297378310', // 你的 Bot ID
     },
     componentProps: {
-      title: 'Coze',
+      title: '智慧对答',
+      lang: 'zh-CN',
+      layout: 'mobile', // 强制移动端布局，解决点不动的问题
     },
+    // 关键：将聊天框直接嵌入到我们定义的容器中，而不是作为悬浮球
+    el: document.getElementById('coze-chat-container'),
     auth: {
       type: 'token',
-      token: 'pat_********',
+      token: 'pat_Gv73A60vI70nO506N7l2N3E4', // 建议检查此 Token 是否在 Coze 后台已开启权限
       onRefreshToken: function () {
-        return 'pat_********'
+        return 'pat_Gv73A60vI70nO506N7l2N3E4'
       }
     }
   });
