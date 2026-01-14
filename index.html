@@ -1,152 +1,156 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.5">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>八万四千问 - 宗萨钦哲仁波切</title>
+    <style>
+        :root {
+            --bg-color: #f7f3f0;
+            --accent-color: #8c2c2c; /* 藏红色 */
+            --text-color: #333;
+            --border-color: #d1c7bc;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "PingFang SC", "Microsoft YaHei", serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 20px 0;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            font-size: 24px;
+            color: var(--accent-color);
+            letter-spacing: 4px;
+        }
+        header p {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+        }
+        #chat-window {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .message {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .user-msg { color: #555; font-weight: bold; }
+        .user-msg::before { content: "问："; color: var(--accent-color); }
+        .bot-msg { color: var(--text-color); padding-left: 10px; border-left: 2px solid var(--accent-color); }
+        .bot-msg::before { content: "仁波切：\n"; font-size: 12px; color: #888; display: block; }
+        
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            outline: none;
+            background: #fff;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="zh-CN"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;八万四千问 - 宗萨钦哲仁波切&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>:root {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--bg-color: #f7f3f0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--accent-color: #8c2c2c; /* 藏红色 */</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--text-color: #333;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--border-color: #d1c7bc;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--bg-color);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: "PingFang SC", "Microsoft YaHei", serif;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 100vh;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.container {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 90%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>max-width: 600px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px 0;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>header {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 30px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>header h1 {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 24px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--accent-color);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>letter-spacing: 4px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>header p {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #666;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-style: italic;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>#chat-window {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>flex: 1;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>overflow-y: auto;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 255, 255, 0.5);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.message {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.6;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.user-msg { color: #555; font-weight: bold; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.user-msg::before { content: "问："; color: var(--accent-color); }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bot-msg { color: var(--text-color); padding-left: 10px; border-left: 2px solid var(--accent-color); }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bot-msg::before { content: "仁波切：\n"; font-size: 12px; color: #888; display: block; }</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.input-area {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gap: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>input {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>flex: 1;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 4px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>outline: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: #fff;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>button {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 10px 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--accent-color);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 4px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;header&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1&gt;八万四千问&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;“佛法是获得解脱和自由之道”&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/header&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="chat-window"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="message bot-msg"&gt;有什么我可以帮到你的吗？关于因果、轮回，或是那些让你困惑的日常琐事。&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="input-area"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="text" id="user-input" placeholder="输入你的困惑..."&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button onclick="ask()"&gt;启问&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 这里可以预设一些书中的经典问答</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const qa_database = [</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{ q: "自由", a: "如果你明白‘一切和合的事物都是无常的’，你就被解放了，而不是被某种行为准则所束缚。 [cite: 6]" },</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{ q: "孤独", a: "你感到孤单和无聊，所以想要一个伴侣；而你也是自私的，所以想要独立。 " },</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{ q: "命运", a: "你有能力去拥有你想要的那种命运，这取决于你自己。因缘既是自由意志又是命运。 [cite: 9]" },</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{ q: "善良", a: "修行佛法不仅是为了成为一个好人，更是为了了悟真理。 [cite: 5]" }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function ask() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const input = document.getElementById('user-input');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const chatWindow = document.getElementById('chat-window');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if(!input.value) return;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 显示用户问题</p>
-<p class="p1"><span class="Apple-converted-space">            </span>chatWindow.innerHTML += `&lt;div class="message user-msg"&gt;${input.value}&lt;/div&gt;`;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 简单的逻辑匹配（实际开发中可对接AI）</p>
-<p class="p1"><span class="Apple-converted-space">            </span>let response = "仁波切曾说：我们总是会陷入想要抓住些什么的圈套中。你可以尝试更深入地理解‘因缘’。 [cite: 6]";</p>
-<p class="p1"><span class="Apple-converted-space">            </span>for(let item of qa_database) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if(input.value.includes(item.q)) {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>response = item.a;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>break;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>chatWindow.innerHTML += `&lt;div class="message bot-msg"&gt;${response}&lt;/div&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>chatWindow.scrollTop = chatWindow.scrollHeight;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}, 500);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>input.value = '';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+    <div class="container">
+        <header>
+            <h1>八万四千问</h1>
+            <p>“佛法是获得解脱和自由之道”</p>
+        </header>
+        <div id="chat-window">
+            <div class="message bot-msg">有什么我可以帮到你的吗？关于因果、轮回，或是那些让你困惑的日常琐事。</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="输入你的困惑...">
+            <button onclick="ask()">启问</button>
+        </div>
+    </div>
+
+    <script>
+        // 这里可以预设一些书中的经典问答
+        const qa_database = [
+            { q: "自由", a: "如果你明白‘一切和合的事物都是无常的’，你就被解放了，而不是被某种行为准则所束缚。 [cite: 6]" },
+            { q: "孤独", a: "你感到孤单和无聊，所以想要一个伴侣；而你也是自私的，所以想要独立。 " },
+            { q: "命运", a: "你有能力去拥有你想要的那种命运，这取决于你自己。因缘既是自由意志又是命运。 [cite: 9]" },
+            { q: "善良", a: "修行佛法不仅是为了成为一个好人，更是为了了悟真理。 [cite: 5]" }
+        ];
+
+        function ask() {
+            const input = document.getElementById('user-input');
+            const chatWindow = document.getElementById('chat-window');
+            if(!input.value) return;
+
+            // 显示用户问题
+            chatWindow.innerHTML += `<div class="message user-msg">${input.value}</div>`;
+            
+            // 简单的逻辑匹配（实际开发中可对接AI）
+            let response = "仁波切曾说：我们总是会陷入想要抓住些什么的圈套中。你可以尝试更深入地理解‘因缘’。 [cite: 6]";
+            for(let item of qa_database) {
+                if(input.value.includes(item.q)) {
+                    response = item.a;
+                    break;
+                }
+            }
+
+            setTimeout(() => {
+                chatWindow.innerHTML += `<div class="message bot-msg">${response}</div>`;
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            }, 500);
+
+            input.value = '';
+        }
+    </script>
 </body>
 </html>
+
+
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
+<script>
+  new CozeWebSDK.WebChatClient({
+    config: {
+      bot_id: '7595129987297378310',
+    },
+    componentProps: {
+      title: 'Coze',
+    },
+    auth: {
+      type: 'token',
+      token: 'pat_********',
+      onRefreshToken: function () {
+        return 'pat_********'
+      }
+    }
+  });
+</script>
