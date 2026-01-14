@@ -6,9 +6,9 @@
     <title>八万四千问 · 宗萨钦哲仁波切</title>
     <style>
         :root {
-            --clay: #f2ede4; /* 宣纸底色 */
-            --maroon: #8c2c2c; /* 僧袍红 */
-            --ink: #3a3530; /* 水墨黑 */
+            --clay: #f2ede4; 
+            --maroon: #8c2c2c; 
+            --ink: #3a3530; 
             --border: #dcd3c1;
         }
 
@@ -17,158 +17,138 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* 防止页面整体滚动，只允许聊天区滚动 */
+        }
+
         body {
-            /* 禅意纹理：使用一张细腻的纸张背景图 */
             background-color: var(--clay);
             background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png'); 
             color: var(--ink);
             font-family: "Optima", "PingFang SC", "Noto Serif SC", serif;
-            margin: 0;
             display: flex;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+            flex-direction: column;
+            align-items: center;
         }
 
         .app-container {
             width: 100%;
             max-width: 500px;
+            height: 100dvh; /* 使用 dvh 适配移动端动态视口 */
             display: flex;
             flex-direction: column;
-            height: 100%;
             position: relative;
-            /* 边框装饰，像一本古书 */
-            border-left: 1px solid rgba(0,0,0,0.03);
-            border-right: 1px solid rgba(0,0,0,0.03);
+            background: rgba(242, 237, 228, 0.6);
         }
 
-        /* 顶部禅意装饰图 */
+        /* 顶部装饰 */
         .zen-header {
-            padding: 30px 20px 10px;
+            padding-top: 20px;
+            flex-shrink: 0;
             text-align: center;
         }
 
         .zen-symbol {
-            width: 60px;
-            height: auto;
-            opacity: 0.7;
-            margin-bottom: 15px;
-            filter: sepia(0.5);
+            width: 40px;
+            height: 40px;
+            opacity: 0.6;
         }
 
         header h1 {
-            font-size: 1.4rem;
-            font-weight: 400;
-            letter-spacing: 6px;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
             color: var(--maroon);
-            margin: 0;
-            text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+            margin: 5px 0 0;
         }
 
-        header .subtitle {
-            font-size: 0.7rem;
-            color: #888;
-            margin-top: 8px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* 对话区域 */
+        /* 对话区域 - 自动撑开 */
         #chat-window {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
-            /* 渐变遮罩，制造出文字从虚无中浮现的效果 */
-            -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
-            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
 
         #chat-window::-webkit-scrollbar { display: none; }
 
         .msg-group {
-            margin-bottom: 25px;
-            animation: slideIn 0.8s ease-out;
+            margin-bottom: 20px;
+            animation: fadeIn 0.6s ease-out;
+            clear: both;
         }
 
         .msg {
             max-width: 85%;
-            padding: 14px 18px;
+            padding: 12px 15px;
             font-size: 0.95rem;
-            line-height: 1.7;
-            border-radius: 2px; /* 放弃圆角，改用直角更有书卷气 */
+            line-height: 1.6;
+            word-wrap: break-word;
         }
 
         .user-msg {
-            margin-left: auto;
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid var(--border);
-            color: var(--ink);
-            text-align: justify;
+            float: right;
+            background: rgba(255, 255, 255, 0.5);
+            border: 0.5px solid var(--border);
+            border-radius: 4px;
         }
 
         .bot-msg {
-            margin-right: auto;
+            float: left;
+            border-left: 1.5px solid var(--maroon);
+            padding-left: 12px;
             background: transparent;
-            border-left: 1px solid var(--maroon);
-            padding-left: 15px;
-            color: var(--ink);
-            position: relative;
         }
 
-        /* 输入区域 */
+        /* 底部输入框区域 - 确保在移动端可见 */
         .input-bar {
-            padding: 25px 20px;
-            background: transparent;
+            flex-shrink: 0;
+            padding: 15px 20px 30px; /* 底部留白适配手机 Home 条 */
+            background: var(--clay);
             display: flex;
             gap: 10px;
             align-items: center;
+            border-top: 0.5px solid var(--border);
         }
 
         input {
             flex: 1;
-            height: 45px;
+            height: 44px;
             border: none;
             border-bottom: 1px solid var(--border);
             background: transparent;
-            padding: 0 10px;
-            font-size: 1rem;
+            padding: 0 5px;
+            font-size: 16px; /* 防止 iOS 自动放大 */
             outline: none;
             color: var(--ink);
         }
 
         button {
-            background: none;
-            border: 1px solid var(--maroon);
-            color: var(--maroon);
-            width: 45px;
-            height: 45px;
+            background: var(--maroon);
+            border: none;
+            color: white;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(140, 44, 44, 0.2);
         }
 
-        button:hover {
-            background: var(--maroon);
-            color: white;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(15px); filter: blur(5px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-
-        /* 装饰：底部一抹水墨 */
-        .ink-footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(to right, transparent, var(--maroon), transparent);
-            opacity: 0.2;
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
         }
     </style>
 </head>
@@ -177,28 +157,27 @@
 <div class="app-container">
     <div class="zen-header">
         <svg class="zen-symbol" viewBox="0 0 100 100">
-            <path d="M50 10 A 40 40 0 1 0 90 50" fill="none" stroke="#8c2c2c" stroke-width="2" stroke-linecap="round" stroke-dasharray="180 20" />
+            <path d="M50 15 A 35 35 0 1 0 85 50" fill="none" stroke="#8c2c2c" stroke-width="2" stroke-linecap="round" />
         </svg>
         <header>
             <h1>八萬四千問</h1>
-            <div class="subtitle">84000 Questions · Dzongsar Khyentse</div>
         </header>
     </div>
 
-    <div id="chat-window">
-        <div class="msg-group">
-            <div class="msg bot-msg">此刻，你心中有什么困惑？</div>
+    <div id="chat-window" class="clearfix">
+        <div class="msg-group clearfix">
+            <div class="msg bot-msg">见地、修道、行持。有什么我可以帮你的？</div>
         </div>
     </div>
 
     <div class="input-bar">
-        <input type="text" id="user-input" placeholder="请在此处落笔..." onkeypress="if(event.keyCode==13) ask()">
-        <button onclick="ask()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 19l7-7-7-7M5 12h14"/></svg>
+        <input type="text" id="user-input" placeholder="输入你的困惑..." onkeypress="if(event.keyCode==13) ask()">
+        <button onclick="ask()" id="send-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
     </div>
-    <div class="ink-footer"></div>
 </div>
+
 
 <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
 <script>
@@ -221,6 +200,3 @@
 
 </body>
 </html>
-
-
-
