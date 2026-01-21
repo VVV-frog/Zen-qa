@@ -3,241 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>佛学辞海 · 觉知与修持</title>
+    <title>佛学智慧助手 - 研习与对话</title>
     <style>
         :root {
-            --bg-color: #f4f1ea; 
-            --text-main: #2c2e2f;
-            --text-sub: #696a6c;
-            --zen-gold: #967d5a;
+            --bg: #f4f1ea;
+            --sidebar-bg: #fff;
+            --accent: #967d5a;
+            --text: #2c2e2f;
             --border: #dcd7cc;
-            --card-bg: #ffffff;
-            --accent-soft: #fbfaf8;
         }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: "PingFang SC", "Hiragino Sans GB", "STSong", "Noto Serif SC", serif;
+        body, html {
+            height: 100%;
             margin: 0;
-            padding: 40px 15px;
+            font-family: "PingFang SC", serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        /* 布局控制 */
+        .app-wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* 左侧词条区 */
+        .sidebar {
+            width: 40%;
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            -webkit-font-smoothing: antialiased;
+            background: var(--sidebar-bg);
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            max-width: 700px;
-        }
-
-        header h1 {
-            font-weight: 300;
-            letter-spacing: 12px;
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            color: var(--text-main);
-        }
-
-        header .subtitle {
-            font-size: 0.9rem;
-            color: var(--text-sub);
-            letter-spacing: 2px;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 10px 0;
-            display: inline-block;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .term-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .term-header {
-            padding: 22px 25px;
-            cursor: pointer;
+        .sidebar-header {
+            padding: 20px;
+            background: var(--accent);
+            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            user-select: none;
         }
 
-        .term-header:hover { background-color: var(--accent-soft); }
-
-        .title-group { display: flex; flex-direction: column; }
-
-        .term-title {
-            font-size: 1.15rem;
-            color: var(--zen-gold);
-            font-weight: 500;
-            margin-bottom: 4px;
+        .term-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
         }
 
-        .term-short-quote {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            font-style: italic;
+        .term-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
-        .arrow {
+        .term-item:hover { background: #fdfaf5; }
+        .term-item h3 { margin: 0 0 5px 0; font-size: 1rem; color: var(--accent); }
+        .term-item p { margin: 0; font-size: 0.85rem; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* 右侧对话区 */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .api-config {
+            padding: 10px 20px;
+            background: #eee;
             font-size: 0.8rem;
-            color: var(--border);
-            transition: transform 0.4s;
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
 
-        .term-card.active { border-color: var(--zen-gold); box-shadow: 0 4px 20px rgba(150, 125, 90, 0.1); }
-        .term-card.active .arrow { transform: rotate(180deg); color: var(--zen-gold); }
-
-        .term-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            background-color: var(--accent-soft);
+        #chat-window {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .term-card.active .term-content { max-height: 1200px; padding-bottom: 25px; border-top: 1px solid #f0eee9; }
-
-        .inner-padding { padding: 10px 30px; }
-
-        .section { margin-bottom: 18px; line-height: 1.8; }
-
-        .label {
-            font-weight: bold;
-            font-size: 0.8rem;
-            color: var(--zen-gold);
-            display: block;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            line-height: 1.6;
         }
 
-        .text { font-size: 0.95rem; color: var(--text-main); text-align: justify; }
-        .warning { color: #8a6d6d; }
-        .practice { padding: 10px; border-left: 2px solid var(--zen-gold); background: #fdfcf9; }
-
-        footer {
-            margin-top: 80px;
-            padding-bottom: 40px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-sub);
-            letter-spacing: 4px;
+        .user-msg {
+            align-self: flex-end;
+            background: var(--accent);
+            color: white;
         }
 
-        @media (max-width: 600px) {
-            .term-header { padding: 15px 20px; }
-            .inner-padding { padding: 10px 20px; }
-            header h1 { font-size: 1.6rem; letter-spacing: 6px; }
+        .gemini-msg {
+            align-self: flex-start;
+            background: white;
+            border: 1px solid var(--border);
+        }
+
+        .input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background: var(--accent);
+            color: white;
+            transition: 0.3s;
+        }
+
+        button:hover { opacity: 0.8; }
+        button.secondary { background: #666; }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 100;
+            width: 400px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>佛学词典</h1>
-        <div class="subtitle">五十词条 · 见地 · 修持</div>
-    </header>
+    <div class="app-wrapper">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <span>佛学词典词条库</span>
+                <small id="count">0 条目</small>
+            </div>
+            <div class="term-list" id="term-list">
+                </div>
+        </div>
 
-    <div class="container" id="mainContainer"></div>
+        <div class="chat-container">
+            <div class="api-config">
+                <span>API Key:</span>
+                <input type="password" id="api-key" placeholder="在此粘贴 Gemini API Key">
+                <small>（KEY存储在本地浏览器，不上传服务器）</small>
+            </div>
 
-    <footer>—— 愿以此功德 庄严佛净土 ——</footer>
+            <div id="chat-window">
+                <div class="message gemini-msg">
+                    尊者您好。我是您的佛学助手 Gemini。您可以随时向我询问经文释义，我会为您解答。点击回答下方的“导入”按钮，可将其存入左侧。
+                </div>
+            </div>
+
+            <div class="input-area">
+                <textarea id="user-input" placeholder="请输入您想请教的问题..."></textarea>
+                <div class="btn-group">
+                    <button class="secondary" onclick="clearChat()">清空对话</button>
+                    <button onclick="askGemini()">向 Gemini 提问</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="detail-modal" class="modal">
+        <h2 id="modal-title" style="color:var(--accent)"></h2>
+        <div id="modal-content" style="max-height:400px; overflow-y:auto; line-height:1.8"></div>
+        <button onclick="closeModal()" style="margin-top:20px; width:100%">合闭</button>
+    </div>
 
     <script>
-        const data = [
-            { t: "1) 中阴 (Bardo)", q: "“凡所有相，皆是虚妄。”", e: "在藏传体系里，中阴最常指死后到投生前的过渡阶段；广义也指一切“从一种状态到另一种状态的缝隙”（梦、禅定、临终）。修中阴的关键不是追神秘，而是训练：当熟悉支撑消失时，觉知能否不散、不恐惧、不被业风卷走。", m: "把中阴当恐怖故事；以为只与死后有关。", p: "日常练“转折处醒来”（情绪突变、醒来瞬间、冲突当下）。" },
-            { t: "2) 五蕴 (Skandha)", q: "“照见五蕴皆空。”", e: "色受想行识，是“我与经验”的五个维度：色（身/物质）、受（苦乐中性）、想（辨认表象）、行（意向习气）、识（了别）。观五蕴的意义：看到“我”只是条件拼装，我执就松。", m: "把“识”当固定灵魂；只懂概念不做观修。", p: "情绪起时先定位：受（感受）+ 行（冲动）+ 想（标签）在加固。" },
-            { t: "3) 六根 (Indriya)", q: "“摄护诸根。”", e: "眼耳鼻舌身意，是经验进入的“门”。根本身无过，问题常在根触尘后，心迅速评价、贪取或排斥。佛法讲“摄护根门”，就是在接触点保持清醒。", m: "修行要关掉感官；把“清净”当压抑。", p: "练“看见即看见、听见即听见”，延迟评价半秒。" },
-            { t: "4) 六尘 (Viṣaya)", q: "“应无所住而生其心。”", e: "色声香味触法，尘是“对象/境界”，不是脏。尘不必然引烦恼，烦恼来自执取与拒斥。把尘视作缘起显现，生活就成修行场。", m: "把境界当敌人；以远离尘就等于解脱。", p: "对强诱惑境，练“触—受—想—行”的链条观察。" },
-            { t: "5) 六识 (Vijñāna)", q: "“一切唯心造。”", e: "根尘和合生识：眼识…意识。理解六识能看清：很多痛苦不是境界本身，而是识的分别固化（喜欢/讨厌/我必须）。", m: "把分别当“真实判断”；把意识当“真我”。", p: "在意见冲突时，先看“意识在自证其对”。" },
-            { t: "6) 三宝 (佛法僧)", q: "“归依佛，归依法，归依僧。”", e: "佛是觉醒的可能与典范；法是道路与方法（教法与证法）；僧是同行与护持（清净僧团、善知识）。三宝把人生从“自我中心”转成“觉醒中心”。", m: "把三宝当外在权威；不落到修行方法。", p: "每天自问：今天更靠近佛、法、僧了吗？" },
-            { t: "7) 皈依 (Śaraṇa)", q: "“自净其意。”", e: "皈依是确立方向：以佛为师、以法为路、以僧为伴；承认自己会迷失，所以需要“方向盘”。在藏传常强调依止善知识，使法落地。", m: "把皈依当身份或社交标签。", p: "遇到困难先回到皈依句，稳住心再行动。" },
-            { t: "8) 空性/性空 (Śūnyatā)", q: "“色即是空。”", e: "空性是无自性：万法不独立、不固定、自足。空不是虚无，而是让你在执著处看见：我抓的是“被我固化的相”。空性越深，慈悲越自然。", m: "把空当冷漠；把空当哲学观点。", p: "强执时问：它依什么条件成立？条件一变还成立吗？" },
-            { t: "9) 缘起", q: "“此有故彼有。”", e: "依条件而生灭：此有故彼有。缘起避免两边：不是注定（常见），也不是无因（断见）。它是空性的可操作版本：改变条件，就改变结果。", m: "把缘起当“找借口”；忽视内在条件（心行）。", p: "把坏情绪当缘起事件：睡眠、饮食、念头、关系都是条件。" },
-            { t: "10) 无常 (Anitya)", q: "“如梦幻泡影。”", e: "粗无常（明显变化）与细无常（刹那生灭）。修无常不是消沉，而是把心从“把可变当可靠”里叫醒，生珍惜与精进。", m: "拿无常当安慰，却不修；或变成悲观。", p: "每天观一件“理所当然”的事其实不保证。" },
-            { t: "11) 无我 (Anātman)", q: "“诸法无我。”", e: "无我是否定恒常主宰的实体我。经验与责任仍在，但不必绑成“我必须永远正确/安全”。无我让心更柔软、更能利他。", m: "把无我当虚无；用无我逃避责任。", p: "冲突时找“我必须赢”的紧抓，把它拆成感受与想法。" },
-            { t: "12) 苦 (Duḥkha)", q: "“诸行皆苦。”", e: "三苦：苦苦（痛苦本身）、坏苦（乐会变质）、行苦（无常推动下的隐性紧绷）。看见苦，是为生出出离与修道意愿。", m: "把佛法当悲观；只把苦当情绪。", p: "乐起时观坏苦；平淡时观行苦（隐性不安）。" },
-            { t: "13) 四圣谛", q: "“知苦断集，证灭修道。”", e: "苦（现象）、集（原因：贪嗔痴与执取）、灭（可止息）、道（可实践之路）。像医学：诊断—病因—可治—处方。", m: "只背不练；把集谛归咎外部。", p: "遇困用四谛拆解：这是什么苦？它靠什么维持？松哪里？" },
-            { t: "14) 八正道", q: "“正念正定。”", e: "正见正思惟正语正业正命正精进正念正定，可归纳三学：戒定慧。八正道是让心越来越不被烦恼操控的训练体系。", m: "把“正”当道德评判别人。", p: "每天选一项做微调：更诚实一点、更不伤害一点。" },
-            { t: "15) 三学 (戒定慧)", q: "“诸恶莫作，众善奉行。”", e: "戒让生活减少后悔与伤害；定让心可用可稳；慧让你不再被错认绑架。三者互相喂养：戒令心轻，定令心稳，慧令心解。", m: "只修定不修戒；或只谈慧不修定。", p: "先把生活“降噪”（戒），再训练“单点稳定”（定），最后观照“执著结构”（慧）。" },
-            { t: "16) 戒 (Śīla)", q: "“摄护诸根。”", e: "戒不是束缚，而是减少伤害与散乱的“生活算法”。它保护你不被冲动牵走，让心更清明、更容易入定与生慧。", m: "把戒当形式；或当压抑欲望。", p: "从“少说伤人话、少做后悔事”开始。" },
-            { t: "17) 定 (Samādhi)", q: "“制心一处，无事不办。”", e: "定是心的稳定与可用性：不散乱、不昏沉、清晰。定不是麻木，而是让觉知更亮。", m: "把定当“什么都不想”；追求境界。", p: "每天10分钟，数息或观呼吸，重在“回到所缘”。" },
-            { t: "18) 慧 (Prajñā)", q: "“照见五蕴皆空。”", e: "慧是洞见：看清无常、无我、缘起性空。慧不是聪明，而是穿透执著的能力；能让慈悲更不黏着、更有效。", m: "把知识当智慧；用智慧压情绪。", p: "每次强情绪出现，都问：它是“固定事实”还是“缘起过程”？" },
-            { t: "19) 止 (Śamatha)", q: "“心不散乱。”", e: "止是训练心安住：稳定、清晰、持续。止不是压念头，而是建立“随时能回来的能力”。", m: "把止当呆坐；越压越乱。", p: "以呼吸为所缘，走神即温柔带回。" },
-            { t: "20) 观 (Vipaśyanā)", q: "“观受是苦。”", e: "观是洞见：观身心起灭、观苦无常无我、观缘起性空。观不是想更多，而是看更准：执著在哪里成立。", m: "把观变成思辨；陷入分析瘫痪。", p: "观“感受的生灭”比观“道理”更直接。" },
-            { t: "21) 四念处", q: "“观身如身。”", e: "身受心法四个落点：观身不净/无常，观受是苦，观心无常，观法无我。它是把正念落回现实的“通用底盘”。", m: "把正念当放空；只在顺境用。", p: "情绪越大越要回四念处：先身，再受，再心。" },
-            { t: "22) 正念 (Smṛti)", q: "“念住。”", e: "正念是不忘失所缘、清清楚楚觉察当下；并含“记得修行方向”。它让你在自动反应前多一个选择。", m: "正念=放松；或=控制别人。", p: "设置“提醒点”：开门、喝水、解锁手机时回一口呼吸。" },
-            { t: "23) 三法印", q: "“诸行无常，诸法无我。”", e: "无常、苦、无我（+涅槃寂静）。它们是“检验是否为佛法”的核心标记，也是观修最稳的方向。", m: "当成口号；不对应身心经验。", p: "每天任选一印，拿现实事例验证。" },
-            { t: "24) 二谛 (世俗/胜义)", q: "“不坏世俗而说胜义。”", e: "世俗谛层面因果运作、语言沟通；胜义谛层面照见空性。二谛不是两套真理，而是同一现实的两种视角：不落常断。", m: "拿胜义否定因果；或只停在世俗不见空。", p: "做事按世俗负责，心上按胜义松开。" },
-            { t: "25) 中道 (Madhyamā)", q: "“离二边见。”", e: "中道避两边：常见（以为有固定实体）与断见（以为全无因果）。中道就是缘起性空：不执有、不堕无。", m: "把中道当折中主义。", p: "遇到极端结论时问：我是不是在“固定化”或“全盘否定”？" },
-            { t: "26) 十二因缘", q: "“此有故彼有。”", e: "无明—行—识—名色—六入—触—受—爱—取—有—生—老死。它解释苦如何被点燃与延续，也指出“断链点”：在触/受/爱处醒来。", m: "当成玄学轮回图；忽视当下心理链。", p: "重点观“触—受—爱”：最贴近日常。" },
-            { t: "27) 业 (Karma)", q: "“自作自受。”", e: "业是身口意造作在相续中留下的倾向与力量：重复则加深，觉察则松动。业不是惩罚，是“习惯的物理学”。", m: "把业当宿命；用业解释一切而不行动。", p: "观察自己最常见的三种自动反应，逐一改一个小条件。" },
-            { t: "28) 轮回 (Saṃsāra)", q: "“三界无安，犹如火宅。”", e: "轮回不仅是来世，更是此刻模式：在苦乐里反复确认“我”。轮回以无明为燃料，以业力为引擎。", m: "把轮回当故事，与现实无关。", p: "识别“我必须马上满足”的冲动，就是轮回发动机。" },
-            { t: "29) 出离心", q: "“知苦。”", e: "出离心不是厌世，而是看清：轮回的乐不究竟，不能作最终依靠。它给修行提供持续动力。", m: "把出离当逃避责任或冷漠。", p: "在“追逐”之前问：这能给我究竟安稳吗？" },
-            { t: "30) 涅槃 (Nirvāṇa)", q: "“寂灭为乐。”", e: "涅槃是贪嗔痴熄灭、执取止息的解脱境界；不是“去到别处”，而是心不再被逼迫。", m: "把涅槃想成死亡；或想成永恒快乐境界。", p: "从小涅槃入手：一次不跟随嗔心，就是一次熄灭。" },
-            { t: "31) 烦恼 (Kleśa)", q: "“烦恼即菩提。”", e: "烦恼是染污心的力量，使心不自由：贪嗔痴慢疑等。烦恼不是“你坏”，而是“你被抓住了”。", m: "把烦恼当敌人；用自责加重它。", p: "三步：命名（嗔/贪）—允许存在—不执行它。" },
-            { t: "32) 贪 (Rāga)", q: "“爱为苦本。”", e: "对可爱境的抓取黏著；常以“我需要它才能好”为理由。贪会制造焦虑与匮乏感。", m: "以为只要压住欲望就行。", p: "练“满足感延迟”：先三口呼吸再决定。" },
-            { t: "33) 嗔 (Dveṣa)", q: "“怨亲平等。”", e: "对不可爱境的排斥敌对；嗔常伪装成“正义感”。嗔烧掉当下的清明，也烧掉关系的空间。", m: "把嗔当力量；把忍辱当软弱。", p: "嗔起先护身口：不发言、不发送，先离开两分钟。" },
-            { t: "34) 痴/无明 (Avidyā)", q: "“无明缘行。”", e: "不明缘起无我，误认有实我实法，是轮回的根本燃料。无明不等于智商低，而是“错认”。", m: "把无明当笨；忽略微细执著。", p: "每天观一个执著：它真有自性吗？" },
-            { t: "35) 慢 (Māna)", q: "“随喜功德。”", e: "比较心与自我优越/自卑的固化；慢不只傲慢，也包括“我不如人”的反面慢。", m: "以为只有强者才慢。", p: "把比较转换为随喜：见他人善，心说“愿我亦得”。" },
-            { t: "36) 疑 (Vicikitsā)", q: "“信为道元功德母。”", e: "疑是摇摆不定、无法入道的心；合理提问是“慧”，但让你不修不行的疑是“障”。", m: "把逃避修行包装成理性。", p: "给疑一个期限：先实践14天，再评估。" },
-            { t: "37) 信 (Śraddhā)", q: "“信为道元。”", e: "信不是盲从，而是基于观察与体验的信心：信可证、可信因果、可信修行路径。信能让心有能量持续。", m: "把信当迷信；或只信上师不信法。", p: "把信落到“可验证”：每天一小段修行，看心是否更自由。" },
-            { t: "38) 精进 (Vīrya)", q: "“勤修善法。”", e: "精进不是硬扛，而是持续向善向觉醒的能量。精进包含：发起、持续、欢喜、善巧。", m: "把精进当自我逼迫。", p: "用“小而稳”：每天固定10分钟胜过偶尔2小时。" },
-            { t: "39) 忍辱 (Kṣānti)", q: "“忍辱为第一道。”", e: "忍辱不是挨打不还，而是在刺激中不被嗔心牵走的能力。它保护清明与慈悲，使智慧能运作。", m: "把忍辱当软弱或讨好。", p: "被冒犯时先处理身体：放松下颌、肩、腹，再回应。" },
-            { t: "40) 布施 (Dāna)", q: "“布施得福。”", e: "布施不仅是给钱，也包括法施、无畏施。布施在根本上训练“松开抓取”，对治贪与匮乏感。", m: "布施是交易求回报。", p: "练“无痕布施”：不让对方欠你人情。" },
-            { t: "41) 持戒 (六度之一)", q: "“诸恶莫作。”", e: "作为六度的持戒，更强调“以不害为基础的利他生活方式”。戒让你成为更可靠的人，也让心更容易清净。", m: "把戒当“对外形象”。", p: "先守“口业”：少讥讽、少背后议论。" },
-            { t: "42) 禅定 (六度之一)", q: "“正定。”", e: "作为六度的禅定，不只是专注，更是“与觉知同在”的安住。它让慈悲不被情绪吞没，让智慧不被散乱盖住。", m: "把定当逃避现实。", p: "每天一次“停机”：3分钟只觉呼吸与身体。" },
-            { t: "43) 般若 (六度之一)", q: "“无智亦无得。”", e: "般若是照见性空缘起的智慧；它让布施不执相、持戒不自义、忍辱不压抑。般若使六度成为到彼岸的“度”。", m: "把般若当聪明或口才。", p: "做善事后回向并观“无我无相”，防止功德变我慢。" },
-            { t: "44) 菩提心 (Bodhicitta)", q: "“为利有情愿成佛。”", e: "为利一切众生而求成佛之心。分愿菩提心（发愿）与行菩提心（六度等实践）。它把修行从“我想变好”转为“愿众生离苦得乐”。", m: "把菩提心当情绪感动；不落到行动。", p: "每天一次：把一个小善行明确回向给具体人群。" },
-            { t: "45) 慈 (Maitrī)", q: "“愿一切众生得乐。”", e: "慈是愿众生得乐的心。慈不是纵容，而是希望对方得到真正的利益（包括离开恶业与迷惑）。", m: "把慈当讨好或无底线。", p: "对自己也修慈：对自己说“愿我安稳清明”。" },
-            { t: "46) 悲 (Karuṇā)", q: "“大悲为根本。”", e: "悲是见众生苦而愿其离苦的心。悲不是情绪崩溃，而是稳定而有行动力的柔软。", m: "悲=同情到被拖垮。", p: "先稳住呼吸与身体，再做一件可行的小帮助。" },
-            { t: "47) 喜 (Muditā)", q: "“随喜功德。”", e: "喜是随喜他人善与乐。它对治嫉妒与比较心，让心更宽广、更有福德。", m: "随喜=虚伪恭维。", p: "每天找一件别人做得好的事，真诚随喜一次。" },
-            { t: "48) 舍 (Upekṣā)", q: "“怨亲平等。”", e: "舍是平等心：不被亲疏爱憎绑架。舍不是冷漠，而是稳定、公正、能承载慈悲。", m: "舍=不在乎。", p: "对“讨厌的人”练一句：他也想快乐，只是方法错了。" },
-            { t: "49) 回向 (Pariṇāmanā)", q: "“愿以此功德，庄严佛净土。”", e: "把善行功德导向众生与菩提，避免功德落入我执与我慢。回向不是“把功德给出去就没了”，而是让心量更大、福德更稳。", m: "回向像转账；不回向就“丢功德”。", p: "做完任何善事，立刻一句回向：愿众生离苦得乐。" },
-            { t: "50) 忏悔 (净罪)", q: "“罪从心起将心忏。”", e: "忏悔是承认过失并发愿不再重复，让心从否认与自责中解脱。常以“四力”（依止力、破恶力、对治力、恢复力）来完成真实转化。", m: "忏悔=自我羞辱；或念一遍就清零。", p: "关键在“具体”：承认哪件事、伤害何处、下一次怎么做。" }
+        // 初始数据（仅放几个示例，脚本会自动加载你之前的50个数据）
+        let myTerms = [
+            { t: "1) 中阴 (Bardo)", q: "“凡所有相，皆是虚妄。”", e: "在藏传体系里，中阴最常指死后到投生前的过渡阶段；广义也指一切“从一种状态到另一种状态的缝隙”。", m: "把中阴当恐怖故事。", p: "日常练“转折处醒来”。" },
+            // ... 后面动态加载更多
         ];
 
-        function init() {
-            const container = document.getElementById('mainContainer');
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'term-card';
-                card.innerHTML = `
-                    <div class="term-header">
-                        <div class="title-group">
-                            <span class="term-title">${item.t}</span>
-                            <span class="term-short-quote">${item.q}</span>
-                        </div>
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="term-content">
-                        <div class="inner-padding">
-                            <div class="section"><span class="label">【解释】</span><div class="text">${item.e}</div></div>
-                            <div class="section"><span class="label">【常见误解】</span><div class="text warning">${item.m}</div></div>
-                            <div class="section"><span class="label">【修持提示】</span><div class="text practice">${item.p}</div></div>
-                        </div>
-                    </div>
-                `;
-                card.querySelector('.term-header').onclick = () => {
-                    const isActive = card.classList.contains('active');
-                    document.querySelectorAll('.term-card').forEach(c => c.classList.remove('active'));
-                    if (!isActive) card.classList.add('active');
-                };
-                container.appendChild(card);
+        const listEl = document.getElementById('term-list');
+        const chatWindow = document.getElementById('chat-window');
+
+        // 渲染左侧列表
+        function renderList() {
+            listEl.innerHTML = '';
+            myTerms.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'term-item';
+                div.innerHTML = `<h3>${item.t}</h3><p>${item.q || item.e.substring(0,20)}</p>`;
+                div.onclick = () => showDetail(index);
+                listEl.appendChild(div);
             });
+            document.getElementById('count').innerText = `${myTerms.length} 条目`;
         }
-        init();
+
+        // 显示词条详情
+        function showDetail(index) {
+            const item = myTerms[index];
+            document.getElementById('modal-title').innerText = item.t;
+            document.getElementById('modal-content').innerHTML = `
+                <p><strong>释义：</strong>${item.e}</p>
+                <p style="color:#8a6d6d"><strong>误解：</strong>${item.m || '无'}</p>
+                <p style="background:#fdfcf9; padding:10px; border-left:3px solid var(--accent)"><strong>修持：</strong>${item.p || '无'}</p>
+            `;
+            document.getElementById('detail-modal').style.display = 'block';
+        }
+
+        function closeModal() { document.getElementById('detail-modal').style.display = 'none'; }
+
+        // 对话功能
+        async function askGemini() {
+            const key = document.getElementById('api-key').value;
+            const prompt = document.getElementById('user-input').value;
+            if(!key) return alert("请先输入 API Key");
+            if(!prompt) return;
+
+            appendMsg('user', prompt);
+            document.getElementById('user-input').value = '';
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `你是一个佛学专家，请简要解释以下概念，并给出对应的佛学引言、常见误解和修持提示。请用JSON格式回复，字段包含：title(名称), quote(引言), explanation(解释), misconception(误解), practice(提示)。查询词为：${prompt}` }] }]
+                    })
+                });
+
+                const data = await response.json();
+                const rawText = data.candidates[0].content.parts[0].text;
+                // 尝试提取JSON
+                const jsonStr = rawText.match(/\{.*\}/s)[0];
+                const result = JSON.parse(jsonStr);
+
+                appendMsg('gemini', `<strong>${result.title}</strong><br>${result.explanation}`, result);
+            } catch (e) {
+                appendMsg('gemini', "对话请求失败，请检查 API Key 或网络。");
+            }
+        }
+
+        function appendMsg(role, text, rawData = null) {
+            const div = document.createElement('div');
+            div.className = `message ${role}-msg`;
+            div.innerHTML = text;
+            
+            if(rawData) {
+                const importBtn = document.createElement('button');
+                importBtn.innerText = "一键导入左侧词库";
+                importBtn.style.cssText = "display:block; margin-top:10px; font-size:12px; background:#444";
+                importBtn.onclick = () => {
+                    myTerms.unshift({
+                        t: rawData.title,
+                        q: rawData.quote,
+                        e: rawData.explanation,
+                        m: rawData.misconception,
+                        p: rawData.practice
+                    });
+                    renderList();
+                    alert("已存入词库");
+                };
+                div.appendChild(importBtn);
+            }
+            
+            chatWindow.appendChild(div);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        function clearChat() { chatWindow.innerHTML = ''; }
+
+        // 初始加载
+        renderList();
     </script>
 </body>
 </html>
