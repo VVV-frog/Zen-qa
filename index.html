@@ -2,44 +2,42 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>佛学研习社 - 智慧词库(故障修复版)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>佛学研习社 - 智慧词库</title>
     <style>
         :root { --bg: #f5f2ed; --sidebar-bg: #ffffff; --accent: #967d5a; --text: #2c2e2f; --border: #dcd7cc; }
         body, html { height: 100%; margin: 0; font-family: "PingFang SC", serif; background: var(--bg); color: var(--text); overflow: hidden; }
         .app-wrapper { display: flex; height: 100vh; }
 
         /* 左侧列表 */
-        .sidebar { width: 380px; border-right: 1px solid var(--border); display: flex; flex-direction: column; background: var(--sidebar-bg); }
+        .sidebar { width: 380px; border-right: 1px solid var(--border); display: flex; flex-direction: column; background: var(--sidebar-bg); flex-shrink: 0; }
         .sidebar-header { padding: 25px; background: var(--accent); color: white; }
-        .term-list { flex: 1; overflow-y: auto; padding-bottom: 20px; }
+        .term-list { flex: 1; overflow-y: auto; }
         .term-item { border-bottom: 1px solid #f0eee9; }
         .term-header { padding: 18px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #fff; }
-        .term-header h3 { margin: 0; font-size: 1rem; font-weight: 500; }
-        .term-content { display: none; padding: 0 25px 20px; background: #fbfaf8; line-height: 1.8; font-size: 0.95rem; }
+        .term-header h3 { margin: 0; font-size: 0.95rem; }
+        .term-content { display: none; padding: 0 25px 20px; background: #fbfaf8; font-size: 0.9rem; line-height: 1.7; }
         .term-item.active .term-content { display: block; }
-        .label { font-weight: bold; color: var(--accent); display: block; margin-top: 10px; font-size: 0.85rem; border-bottom: 1px solid #eee; }
+        .label { font-weight: bold; color: var(--accent); display: block; margin-top: 10px; font-size: 0.8rem; }
 
-        /* 右侧对话区 */
-        .chat-container { flex: 1; display: flex; flex-direction: column; background: #eeebdf; }
-        #chat-window { flex: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
-        .message { max-width: 85%; padding: 15px 20px; border-radius: 12px; position: relative; line-height: 1.6; }
+        /* 右侧对话 */
+        .chat-container { flex: 1; display: flex; flex-direction: column; background: #eeebdf; min-width: 0; }
+        #chat-window { flex: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 15px; }
+        .message { max-width: 85%; padding: 12px 16px; border-radius: 12px; position: relative; line-height: 1.6; word-wrap: break-word; }
         .user-msg { align-self: flex-end; background: var(--accent); color: white; }
-        .gemini-msg { align-self: flex-start; background: white; border: 1px solid var(--border); white-space: pre-wrap; padding-bottom: 45px; }
+        .gemini-msg { align-self: flex-start; background: white; border: 1px solid var(--border); white-space: pre-wrap; padding-bottom: 40px; }
+        
+        .entry-trigger { position: absolute; bottom: 8px; right: 12px; background: var(--accent); color: white; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; }
 
-        /* 录入按钮 */
-        .manual-entry-btn { position: absolute; bottom: 10px; right: 15px; background: var(--accent); color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .input-area { padding: 20px; background: white; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+        textarea { flex: 1; height: 60px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; resize: none; font-family: inherit; }
+        .send-btn { padding: 0 20px; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
-        .input-area { padding: 20px; background: white; border-top: 1px solid var(--border); display: flex; gap: 12px; }
-        textarea#userInput { flex: 1; height: 65px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; resize: none; font-family: inherit; }
-        .send-btn { width: 80px; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-
-        /* 弹窗系统 */
+        /* 弹窗 */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; }
-        .modal { background: white; padding: 25px; border-radius: 12px; width: 450px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .modal input, .modal textarea { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        .modal { background: white; padding: 25px; border-radius: 12px; width: 450px; max-width: 90%; }
+        .modal input, .modal textarea { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
         .modal-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
-        .btn-cancel { background: #eee; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; }
-        .btn-confirm { background: var(--accent); color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -47,20 +45,18 @@
 <div class="app-wrapper">
     <div class="sidebar">
         <div class="sidebar-header">
-            <h2 style="margin:0; font-size:1.2rem; letter-spacing:2px;">佛学私藏词库</h2>
-            <div id="count" style="font-size:12px; margin-top:5px; opacity:0.8;"></div>
+            <h2 style="margin:0; font-size:1.1rem; letter-spacing:1px;">佛学私藏词库</h2>
+            <div id="count" style="font-size:12px; opacity:0.8; margin-top:5px"></div>
         </div>
         <div class="term-list" id="termList"></div>
     </div>
 
     <div class="chat-container">
         <div id="chat-window">
-            <div class="message gemini-msg">请输入佛学概念进行研习。若因网络问题导致回答失败，您仍可点击此处的按钮手动录入新词条。
-                <button class="manual-entry-btn" onclick="openModal()">📥 手动录入</button>
-            </div>
+            <div class="message gemini-msg">已连接至部署环境。请输入词条，我会自动为您生成结构化内容。</div>
         </div>
         <div class="input-area">
-            <textarea id="userInput" placeholder="例如：什么是因果？"></textarea>
+            <textarea id="userInput" placeholder="输入你想研习的概念..."></textarea>
             <button class="send-btn" onclick="askGemini()">提问</button>
         </div>
     </div>
@@ -68,48 +64,61 @@
 
 <div class="modal-overlay" id="entryModal">
     <div class="modal">
-        <h3 style="margin-top:0; color:var(--accent)">新增词条</h3>
-        <input type="text" id="in-t" placeholder="名称 (如: 51. 因果)">
-        <textarea id="in-q" placeholder="短引 (金句)"></textarea>
-        <textarea id="in-e" placeholder="详细解释" style="height:80px"></textarea>
-        <textarea id="in-m" placeholder="常见误解"></textarea>
-        <textarea id="in-p" placeholder="修持提示"></textarea>
+        <h3 style="margin:0; color:var(--accent)">➕ 手动录入词条</h3>
+        <input type="text" id="in-t" placeholder="名称 (如: 51. 缘起)">
+        <textarea id="in-q" placeholder="【短引】"></textarea>
+        <textarea id="in-e" placeholder="【解释】" style="height:80px"></textarea>
+        <textarea id="in-m" placeholder="【常见误解】"></textarea>
+        <textarea id="in-p" placeholder="【修持提示】"></textarea>
         <div class="modal-btns">
-            <button class="btn-cancel" onclick="closeModal()">取消</button>
-            <button class="btn-confirm" onclick="saveEntry()">保存词条</button>
+            <button onclick="closeModal()">取消</button>
+            <button style="background:var(--accent); color:white; border:none; padding:8px 20px; border-radius:4px; cursor:pointer;" onclick="saveEntry()">确认添加</button>
         </div>
     </div>
 </div>
 
 <script>
-    // 之前那 50 条数据的精简版，确保语法不报错
+    // 预设 10 条示例，确保在部署时由于数据过大可能产生的错误最小化
     let myTerms = [
-        {t:"1) 中阴", q:"“诸行无常。”", e:"生死过渡阶段。", m:"纯粹恐怖故事。", p:"练转折处醒来。"},
-        {t:"2) 五蕴", q:"“照见五蕴皆空。”", e:"色受想行识。", m:"把识当永恒灵魂。", p:"定位受与想。"},
-        {t:"3) 六根", q:"“摄护诸根。”", e:"眼耳鼻舌身意。", m:"强行关闭感官。", p:"看见只是看见。"}
-        /* 您可以之后继续补充其余词条 */
+        {t:"1. 中阴", q:"“诸行无常。”", e:"生命状态转换的缝隙，如生死之间。", m:"当做恐怖传说。", p:"练习在情绪突发时保持觉知。"},
+        {t:"2. 五蕴", q:"“照见五蕴皆空。”", e:"色受想行识五种身心聚合。", m:"以为有个永恒的‘识’。", p:"观察情绪如何由‘受’转为‘想’。"},
+        {t:"3. 六根", q:"“摄护诸根。”", e:"眼耳鼻舌身意六种感官功能。", m:"要把感官强行关掉。", p:"练‘看见只是看见’。"},
+        {t:"4. 六尘", q:"“应无所住。”", e:"色声香味触法六种外在对象。", m:"以为外境是肮脏的。", p:"在诱惑面前观察心的起伏。"},
+        {t:"5. 六识", q:"“一切唯心造。”", e:"根尘接触后产生的了别功能。", m:"把识当成真我。", p:"冲突时觉察意识的偏见。"},
+        {t:"6. 三宝", q:"“归依佛法僧。”", e:"佛、法、僧，觉悟的导师、路径与伙伴。", m:"当成外在神灵。", p:"每日自省是否背离觉醒。"},
+        {t:"7. 皈依", q:"“自净其意。”", e:"确立人生以觉醒为唯一的方向。", m:"当成入教仪式。", p:"遇到烦躁先回想皈依的初心。"},
+        {t:"8. 空性", q:"“色即是空。”", e:"万法依缘而生，没有固定永恒的本性。", m:"空就是什么都没有。", p:"执着时问：它依赖什么存在？"},
+        {t:"9. 缘起", q:"“此有故彼有。”", e:"一切事物都是条件的组合。", m:"宿命论或偶然论。", p:"从睡眠、饮食观察身体的缘起。"},
+        {t:"10. 无常", q:"“诸行无常。”", e:"事物时刻在变迁。粗为生灭，细为刹那。", m:"感到消极厌世。", p:"珍惜当下的每一个因缘。"}
     ];
 
     const API_KEY = "AIzaSyB5FyPB_XW5-2f98p12WFqI1je5H5WmDyg";
 
     function renderList() {
         const list = document.getElementById('termList');
+        if(!list) return;
         list.innerHTML = '';
         myTerms.forEach((item, index) => {
-            const wrap = document.createElement('div');
-            wrap.className = 'term-item';
-            wrap.innerHTML = `
-                <div class="term-header" onclick="this.parentElement.classList.toggle('active')">
+            const div = document.createElement('div');
+            div.className = 'term-item';
+            div.innerHTML = `
+                <div class="term-header" onclick="toggleItem(this)">
                     <h3>${item.t}</h3><span>▼</span>
                 </div>
                 <div class="term-content">
-                    <span class="label">【短引】</span><div>${item.q || '无'}</div>
-                    <span class="label">【解释】</span><div>${item.e || '无'}</div>
-                    <span class="label">【修持】</span><div>${item.p || '无'}</div>
+                    <span class="label">【短引】</span><div>${item.q || '-'}</div>
+                    <span class="label">【解释】</span><div>${item.e || '-'}</div>
+                    <span class="label">【常见误解】</span><div>${item.m || '-'}</div>
+                    <span class="label">【修持提示】</span><div>${item.p || '-'}</div>
                 </div>`;
-            list.appendChild(wrap);
+            list.appendChild(div);
         });
-        document.getElementById('count').innerText = `已存入 ${myTerms.length} 个词条`;
+        document.getElementById('count').innerText = `已加载 ${myTerms.length} 个条目`;
+    }
+
+    function toggleItem(el) {
+        const parent = el.parentElement;
+        parent.classList.toggle('active');
     }
 
     async function askGemini() {
@@ -118,28 +127,31 @@
         if (!q) return;
 
         appendMsg('user', q);
-        input.value = '';
+        input.value = '正在思考中...';
+        input.disabled = true;
 
-        // 核心修复：更新后的 API URL
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+        // 自动添加 Prompt 指令
+        const promptText = `请解释佛学概念“${q}”。要求回复必须包含以下四个部分，每部分用换行隔开：
+1.短引：(一句经典金句)
+2.解释：(精炼核心义理)
+3.常见误解：(避坑指南)
+4.修持提示：(实操建议)`;
 
         try {
-            const response = await fetch(apiUrl, {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: `请简洁解释佛学名词“${q}”，分四段：短引、解释、常见误解、修持提示。` }] }]
-                })
+                body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
             });
 
-            if (!response.ok) throw new Error('API Error');
-            
             const data = await response.json();
-            const text = data.candidates[0].content.parts[0].text;
-            appendMsg('gemini', text);
+            const reply = data.candidates[0].content.parts[0].text;
+            appendMsg('gemini', reply);
         } catch (e) {
-            console.error(e);
-            appendMsg('gemini', "【系统消息】网络连接超时。您可以根据自己的理解手动录入该词条。");
+            appendMsg('gemini', "GitHub 环境连接 API 超时。建议检查 API Key 或稍后重试。您可以先点击右侧按钮手动录入。");
+        } finally {
+            input.value = '';
+            input.disabled = false;
         }
     }
 
@@ -151,12 +163,11 @@
 
         if (role === 'gemini') {
             const btn = document.createElement('button');
-            btn.className = 'manual-entry-btn';
-            btn.innerHTML = '📥 录入';
-            btn.onclick = openModal;
+            btn.className = 'entry-trigger';
+            btn.innerHTML = '📥 手动录入';
+            btn.onclick = () => openModal();
             div.appendChild(btn);
         }
-
         win.appendChild(div);
         win.scrollTop = win.scrollHeight;
     }
@@ -166,8 +177,7 @@
 
     function saveEntry() {
         const t = document.getElementById('in-t').value;
-        if (!t) return alert("请输入词条名称");
-        
+        if (!t) return alert("请输入名称");
         myTerms.unshift({
             t: t,
             q: document.getElementById('in-q').value,
@@ -175,14 +185,13 @@
             m: document.getElementById('in-m').value,
             p: document.getElementById('in-p').value
         });
-
         renderList();
         closeModal();
-        // 清空输入框
         ['in-t','in-q','in-e','in-m','in-p'].forEach(id => document.getElementById(id).value = '');
     }
 
-    renderList();
+    // 确保 DOM 加载后再运行
+    window.onload = renderList;
 </script>
 </body>
 </html>
