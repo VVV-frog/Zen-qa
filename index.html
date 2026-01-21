@@ -187,7 +187,7 @@
         const prompt = `你是一个佛学专家。请解释“${text}”。按以下四板块回复：1.短引 2.解释 3.常见误解 4.修持提示。`;
 
         try {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${AIzaSyB5FyPB_XW5-2f98p12WFqI1je5H5WmDyg}`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
