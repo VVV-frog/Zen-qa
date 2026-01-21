@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>佛学研习社 - 交互笔记版</title>
+    <title>佛学研习社 - 智慧词库</title>
     <style>
         :root { --bg: #f5f2ed; --sidebar-bg: #ffffff; --accent: #967d5a; --text: #2c2e2f; --border: #dcd7cc; }
-        body, html { height: 100%; margin: 0; font-family: "PingFang SC", serif; background: var(--bg); color: var(--text); overflow: hidden; }
+        body, html { height: 100%; margin: 0; font-family: "PingFang SC", "Hiragino Sans GB", serif; background: var(--bg); color: var(--text); overflow: hidden; }
         .app-wrapper { display: flex; height: 100vh; }
 
         /* 左侧列表 */
@@ -26,39 +26,50 @@
         .text-prac { background: #f2efea; padding: 12px; border-radius: 4px; margin-top: 5px; }
 
         /* 右侧对话区 */
-        .chat-container { flex: 1; display: flex; flex-direction: column; background: #eeebdf; }
+        .chat-container { flex: 1; display: flex; flex-direction: column; background: #eeebdf; position: relative; }
         #chat-window { flex: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
-        .message { max-width: 90%; padding: 15px 20px; border-radius: 12px; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .message { max-width: 85%; padding: 15px 20px; border-radius: 12px; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.05); line-height: 1.6; }
         .user-msg { align-self: flex-end; background: var(--accent); color: white; }
         .gemini-msg { align-self: flex-start; background: white; border: 1px solid var(--border); white-space: pre-wrap; }
 
-        /* 手动录入按钮 */
-        .entry-btn { position: absolute; right: -45px; top: 0; background: var(--accent); color: white; border: none; padding: 5px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        /* 录入按钮样式 */
+        .entry-btn { position: absolute; right: -50px; top: 0; background: var(--accent); color: white; border: none; padding: 6px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; line-height: 1.2; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
 
         .input-area { padding: 20px; background: white; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
-        textarea { width: 100%; height: 60px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; resize: none; font-family: inherit; }
-        .send-btn { align-self: flex-end; padding: 8px 25px; background: var(--accent); color: white; border: none; border-radius: 4px; cursor: pointer; }
+        textarea#userInput { width: 100%; height: 60px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; resize: none; box-sizing: border-box; font-family: inherit; }
+        .send-btn { align-self: flex-end; padding: 8px 30px; background: var(--accent); color: white; border: none; border-radius: 5px; cursor: pointer; }
 
-        /* Popup 录入弹窗 */
+        /* Modal 录入弹窗 */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
-        .modal { background: white; padding: 25px; border-radius: 12px; width: 450px; display: flex; flex-direction: column; gap: 10px; }
-        .modal input, .modal textarea { padding: 8px; border: 1px solid var(--border); border-radius: 4px; width: 100%; box-sizing: border-box; }
-        .modal textarea { height: 60px; }
-        .modal-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+        .modal { background: white; padding: 25px; border-radius: 12px; width: 500px; max-width: 90%; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
+        .modal h3 { margin: 0 0 10px 0; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 5px; }
+        .modal-field { display: flex; flex-direction: column; gap: 4px; }
+        .modal-field label { font-size: 12px; color: #888; }
+        .modal input, .modal textarea { padding: 10px; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; }
+        .modal textarea { height: 50px; resize: vertical; }
+        .modal-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
+        .btn-cancel { background: #eee; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; }
+        .btn-save { background: var(--accent); color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="app-wrapper">
     <div class="sidebar">
-        <div class="sidebar-header"><h2>佛学私藏词库</h2><div id="count" style="font-size:12px; opacity:0.8"></div></div>
+        <div class="sidebar-header">
+            <h2>佛学私藏词库</h2>
+            <div id="count" style="font-size: 12px; opacity: 0.8; margin-top:5px"></div>
+        </div>
         <div class="term-list" id="termList"></div>
     </div>
 
     <div class="chat-container">
-        <div id="chat-window"><div class="message gemini-msg">欢迎。请告诉我你想研习的佛学概念。\n我会按照“短引、解释、常见误解、修持提示”为你整理。</div></div>
+        <div id="chat-window">
+            <div class="message gemini-msg">尊者您好。您可以输入任何佛学名词，我会按结构为您解释。
+如需将内容存入左侧，请点击回答右侧的“➕录入”。</div>
+        </div>
         <div class="input-area">
-            <textarea id="userInput" placeholder="例如：什么是四依法？"></textarea>
+            <textarea id="userInput" placeholder="请输入佛学名词，例如：何谓四圣谛？"></textarea>
             <button class="send-btn" onclick="askGemini()">提问</button>
         </div>
     </div>
@@ -66,24 +77,89 @@
 
 <div class="modal-overlay" id="entryModal">
     <div class="modal">
-        <h3 style="margin:0; color:var(--accent)">生成新词条</h3>
-        <input type="text" id="in-t" placeholder="名称 (例如: 51) 苦集灭道)">
-        <textarea id="in-q" placeholder="短引"></textarea>
-        <textarea id="in-e" placeholder="解释"></textarea>
-        <textarea id="in-m" placeholder="常见误解"></textarea>
-        <textarea id="in-p" placeholder="修持提示"></textarea>
+        <h3>➕ 生成新词条</h3>
+        <div class="modal-field">
+            <label>词条名称 (例如: 51) 四圣谛)</label>
+            <input type="text" id="in-t">
+        </div>
+        <div class="modal-field">
+            <label>短引 (经典出处或核心句)</label>
+            <textarea id="in-q"></textarea>
+        </div>
+        <div class="modal-field">
+            <label>解释 (核心义理)</label>
+            <textarea id="in-e" style="height: 80px;"></textarea>
+        </div>
+        <div class="modal-field">
+            <label>常见误解</label>
+            <textarea id="in-m"></textarea>
+        </div>
+        <div class="modal-field">
+            <label>修持提示 (如何实操)</label>
+            <textarea id="in-p"></textarea>
+        </div>
         <div class="modal-btns">
-            <button onclick="closeModal()">取消</button>
-            <button style="background:var(--accent); color:white; border:none; padding:8px 20px; border-radius:4px; cursor:pointer;" onclick="saveEntry()">确认添加到左侧</button>
+            <button class="btn-cancel" onclick="closeModal()">取消</button>
+            <button class="btn-save" onclick="saveEntry()">保存到词库</button>
         </div>
     </div>
 </div>
 
 <script>
     const API_KEY = "AIzaSyB5FyPB_XW5-2f98p12WFqI1je5H5WmDyg";
+    
+    // 完整恢复 50 条数据
     let myTerms = [
-        /* 这里请贴入你那50个原始词条数据 */
-        {t:"1) 中阴（Bardo）", e:"在藏传体系里，中阴最常指死后到投生前的过渡阶段；广义也指一切“从一种状态到另一种状态的缝隙”（梦、禅定、临终）。", m:"把中阴当恐怖故事。", p:"日常练“转折处醒来”。", q:"“诸行无常。”"}
+        {t:"1) 中阴（Bardo）", e:"在藏传体系里，中阴最常指死后到投生前的过渡阶段；广义也指一切“从一种状态到另一种状态的缝隙”。", m:"把中阴当恐怖故事；以为只与死后有关。", p:"日常练“转折处醒来”（情绪突变、醒来瞬间）。", q:"“诸行无常。”"},
+        {t:"2) 五蕴（Skandha）", e:"色受想行识，是“我与经验”的五个维度。观五蕴的意义：看到“我”只是条件拼装，我执就松。", m:"把“识”当固定灵魂。", p:"情绪起时先定位：受（感受）+ 想（标签）。", q:"“照见五蕴皆空。”"},
+        {t:"3) 六根（Indriya）", e:"眼耳鼻舌身意，是经验进入的“门”。根本身无过，问题常在根触尘后，心迅速评价。", m:"修行要关掉感官；把“清净”当压抑。", p:"练“看见即看见”，延迟评价半秒。", q:"“摄护诸根。”"},
+        {t:"4) 六尘（Viṣaya）", e:"色声香味触法，尘是“对象/境界”，不是脏。把尘视作缘起显现，生活就成修行场。", m:"把境界当敌人。", p:"对强诱惑境，练“触—受—想”的链条观察。", q:"“应无所住而生其心。”"},
+        {t:"5) 六识（Vijñāna）", e:"根尘和合生识：眼识…意识。理解六识能看清：痛苦来自识的分别固化。", m:"把分别当“真实判断”。", p:"在意见冲突时，先看“意识在自证其对”。", q:"“一切唯心造。”"},
+        {t:"6) 三宝（佛法僧）", e:"佛是觉醒的榜样；法是道路；僧是同行者。三宝把人生从“自我中心”转成“觉醒中心”。", m:"把三宝当外在权威。", p:"每天自问：今天更靠近觉醒了吗？", q:"“归依佛，归依法，归依僧。”"},
+        {t:"7) 皈依（Śaraṇa）", e:"皈依是确立方向：以佛为师、以法为路。承认自己会迷失，所以需要“方向盘”。", m:"把皈依当身份标签。", p:"遇到困难先回到皈依句，稳住心再行动。", q:"“自净其意。”"},
+        {t:"8) 空性/性空（Śūnyatā）", e:"空性是无自性：万法不独立、不固定。空不是虚无，而是让你在执著处看见：我抓的是幻象。", m:"把空当虚无；把空当哲学观点。", p:"强执时问：它依什么条件成立？条件一变还成立吗？", q:"“色即是空。”"},
+        {t:"9) 缘起（Pratītyasamutpāda）", e:"依条件而生灭：此有故彼有。它是空性的可操作版本：改变条件，就改变结果。", m:"把缘起当“找借口”；忽视内在心行。", p:"把坏情绪当缘起事件：睡眠、饮食都是条件。", q:"“此有故彼有。”"},
+        {t:"10) 无常（Anitya）", e:"粗无常（明显变化）与细无常（刹那生灭）。修无常不是消沉，而是把心叫醒，生珍惜心。", m:"拿无常当安慰，却不修。", p:"每天观一件“理所当然”的事其实不保证。", q:"“诸行无常。”"},
+        {t:"11) 无我（Anātman）", e:"无我是否定恒常主宰的实体我。不必绑成“我必须永远正确/安全”。", m:"把无我当虚无；用无我逃避责任。", p:"冲突时找“我必须赢”的紧抓，把它拆开。", q:"“诸法无我。”"},
+        {t:"12) 苦（Duḥkha）", e:"三苦：苦苦、坏苦、行苦。看见苦，是为生出出离与修道意愿。", m:"把佛法当悲观。", p:"乐起时观坏苦（乐会变质）。", q:"“诸行皆苦。”"},
+        {t:"13) 四圣谛", e:"苦（现象）、集（原因）、灭（可止息）、道（方法）。像医学：诊断—病因—可治—处方。", m:"只背不练；把集谛归咎外部。", p:"遇困用四谛拆解：这是什么苦？它靠什么维持？", q:"“知苦断集，证灭修道。”"},
+        {t:"14) 八正道", e:"正见、正思惟、正语、正业、正命、正精进、正念、正定。让心不被烦恼操控的训练体系。", m:"把“正”当道德评判别人。", p:"每天选一项做微调：更诚实一点。", q:"“正念正定。”"},
+        {t:"15) 三学（戒定慧）", e:"戒让生活减少后悔；定让心可用；慧让你不再被错认绑架。", m:"只修定不修戒；或只谈慧不修定。", p:"先把生活降噪（戒），再训练单点稳定（定）。", q:"“诸恶莫作，众善奉行。”"},
+        {t:"16) 戒（Śīla）", e:"戒不是束缚，而是减少伤害的“生活算法”。保护你不被冲动牵走。", m:"把戒当形式；或当压抑欲望。", p:"从“少说伤人话”开始。", q:"“摄护诸根。”"},
+        {t:"17) 定（Samādhi）", e:"定是心的稳定与可用性。定不是麻木，而是让觉知更亮。", m:"把定当“什么都不想”。", p:"每天10分钟观呼吸，走神即带回。", q:"“制心一处，无事不办。”"},
+        {t:"18) 慧（Prajñā）", e:"慧是洞见：看清无常、缘起。慧不是聪明，而是穿透执著的能力。", m:"把知识当智慧。", p:"每次强情绪出现，都问：它是固定事实还是缘起过程？", q:"“照见五蕴皆空。”"},
+        {t:"19) 止（Śamatha）", e:"止是训练心安住。止不是压念头，而是建立“随时能回来的能力”。", m:"把止当呆坐。", p:"以呼吸为所缘，走神即温柔带回。", q:"“心不散乱。”"},
+        {t:"20) 观（Vipaśyanā）", e:"观是洞见起灭。观不是想更多，而是看更准：执著在哪里成立。", m:"陷入分析瘫痪。", p:"观“感受的生灭”比观“道理”更直接。", q:"“观受是苦。”"},
+        {t:"21) 四念处", e:"身受心法：观身不净/无常，观受是苦，观心无常，观法无我。", m:"把正念当放空。", p:"情绪越大越要回四念处：先找身体的感觉。", q:"“观身如身。”"},
+        {t:"22) 正念（Smṛti）", e:"正念是不忘失所缘、清楚觉察当下。它让你在自动反应前多一个选择。", m:"正念=放松。", p:"开门、喝水时回一口呼吸。", q:"“念住。”"},
+        {t:"23) 三法印", e:"无常、苦、无我。检验是否为佛法的核心标记。", m:"当成口号；不对应身心经验。", p:"每天任选一印，拿现实事例验证。", q:"“诸行无常。”"},
+        {t:"24) 二谛（世俗/胜义）", e:"世俗层面因果运作；胜义层面照见空性。不落常断。", m:"拿胜义否定因果。", p:"做事按世俗负责，心上按胜义松开。", q:"“不坏世俗而说胜义。”"},
+        {t:"25) 中道（Madhyamā）", e:"不执有、不堕无。避开常见与断见。", m:"把中道当折中主义。", p:"遇到极端结论时问：我是不是在“固定化”？", q:"“离二边见。”"},
+        {t:"26) 十二因缘", e:"解释苦如何被点燃与延续。指出断链点：在“受/爱”处醒来。", m:"当成玄学轮回图。", p:"重点观“触—受—爱”：最贴近日常。", q:"“此有故彼有。”"},
+        {t:"27) 业（Karma）", e:"业是行为留下的倾向力量。业不是惩罚，是“习惯的物理学”。", m:"把业当宿命。", p:"观察自己最常见的三种自动反应。", q:"“自作自受。”"},
+        {t:"28) 轮回（Saṃsāra）", e:"在苦乐里反复确认“我”的模式。以无明为燃料。", m:"把轮回当来世故事。", p:"识别“我必须马上满足”的冲动。", q:"“三界无安，犹如火宅。”"},
+        {t:"29) 出离心", e:"看清轮回的乐不究竟，产生寻找真实安稳的动力。", m:"把出离当厌世。", p:"在追逐名利前问：这能给我究竟安稳吗？", q:"“知苦。”"},
+        {t:"30) 涅槃（Nirvāṇa）", e:"贪嗔痴熄灭的解脱境界。心不再被逼迫。", m:"把涅槃想成死亡。", p:"一次不跟随嗔心，就是一次小熄灭。", q:"“寂灭为乐。”"},
+        {t:"31) 烦恼（Kleśa）", e:"染污心的力量，使心不自由。烦恼不是你坏，而是你被抓住了。", m:"用自责加重烦恼。", p:"命名（嗔/贪）—允许存在—不执行它。", q:"“烦恼即菩提。”"},
+        {t:"32) 贪（Rāga）", e:"对可爱境的抓取。贪会制造焦虑与匮乏感。", m:"以为只要压住欲望就行。", p:"练“满足感延迟”：先三口呼吸再决定。", q:"“爱为苦本。”"},
+        {t:"33) 嗔（Dveṣa）", e:"对不可爱境的排斥。嗔烧掉当下的清明。", m:"把嗔当力量；把忍辱当软弱。", p:"嗔起先护身口：不发言、先离开。", q:"“怨亲平等。”"},
+        {t:"34) 痴/无明（Avidyā）", e:"不明缘起无我。无明不等于笨，而是“错认”。", m:"忽略微细执著。", p:"每天观一个执著：它真有自性吗？", q:"“无明缘行。”"},
+        {t:"35) 慢（Māna）", e:"比较心与自我优越/自卑。慢是阻碍进步的墙。", m:"以为只有强者才慢。", p:"把比较转换为随喜他人的好。", q:"“随喜功德。”"},
+        {t:"36) 疑（Vicikitsā）", e:"让你不修不行的怀疑。合理提问是慧，但死锁是障。", m:"把逃避修行包装成理性。", p:"给疑一个期限：先实践14天再评估。", q:"“信为道元功德母。”"},
+        {t:"37) 信（Śraddhā）", e:"基于体验的信心：信可证、可信修行路径。", m:"把信当迷信。", p:"每天修行，看心是否更自由。", q:"“信为道元。”"},
+        {t:"38) 精进（Vīrya）", e:"持续向善向觉醒的能量。精进不是硬扛。", m:"把精进当自我逼迫。", p:"每天固定10分钟胜过偶尔2小时。", q:"“勤修善法。”"},
+        {t:"39) 忍辱（Kṣānti）", e:"在刺激中不被嗔心牵走的能力。保护清明。", m:"当成挨打不还。", p:"放松身体（下颌/肩）再回应。", q:"“忍辱为第一道。”"},
+        {t:"40) 布施（Dāna）", e:"训练“松开抓取”，对治贪与匮乏感。", m:"布施是交易回报。", p:"练“无痕布施”：不让对方觉得欠你。", q:"“布施得福。”"},
+        {t:"41) 持戒（Śīla）", e:"以不害为基础的利他生活。戒让你更可靠。", m:"当成对外形象。", p:"先守口业：少在背后议论人。", q:"“诸恶莫作。”"},
+        {t:"42) 禅定（Dhyāna）", e:"与觉知同在的安住。让慈悲不被情绪吞没。", m:"把定当逃避现实。", p:"每天3分钟只觉呼吸。", q:"“正定。”"},
+        {t:"43) 般若（Prajñā）", e:"照见缘起性空的智慧。使六度成为到彼岸的工具。", m:"当成聪明或口才。", p:"做善事后观“无我”，防止功德变我慢。", q:"“无智亦无得。”"},
+        {t:"44) 菩提心（Bodhicitta）", e:"为利众生而求成佛之心。把修行转为“愿众生离苦”。", m:"当成情绪感动。", p:"把一个小善行回向给具体的人。", q:"“为利有情愿成佛。”"},
+        {t:"45) 慈（Maitrī）", e:"愿众生得乐。希望对方得到真正的利益。", m:"当成纵容或无底线。", p:"对自己说“愿我安稳清明”。", q:"“愿一切众生得乐。”"},
+        {t:"46) 悲（Karuṇā）", e:"愿众生离苦。稳定而有行动力的柔软。", m:"悲=同情到崩溃。", p:"先稳住呼吸，再做可行的小帮助。", q:"“大悲为根本。”"},
+        {t:"47) 喜（Muditā）", e:"随喜他人之乐。对治嫉妒心。", m:"虚伪的恭维。", p:"每天找一件别人做得好的事真诚随喜。", q:"“随喜功德。”"},
+        {t:"48) 舍（Upekṣā）", e:"平等心：不被亲疏爱憎绑架。", m:"舍=不在乎。", p:"对讨厌的人练一句：他也想快乐。", q:"“怨亲平等。”"},
+        {t:"49) 回向（Pariṇāmanā）", e:"把善行导向众生。避免功德落入我慢。", m:"回向像转账。", p:"做完善事立刻回向众生离苦。", q:"“愿以此功德，庄严佛净土。”"},
+        {t:"50) 忏悔（净罪）", e:"承认过失并发愿不再重犯。从自责中解脱。", m:"自我羞辱。", p:"明确承认哪件事、下一次怎么做。", q:"“罪从心起将心忏。”}
     ];
 
     function renderList() {
@@ -104,7 +180,7 @@
                 </div>`;
             container.appendChild(wrap);
         });
-        document.getElementById('count').innerText = `当前词库：${myTerms.length} 条`;
+        document.getElementById('count').innerText = `已收录 ${myTerms.length} 条`;
     }
 
     function toggleItem(header) {
@@ -125,14 +201,18 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    contents: [{ parts: [{ text: `请解释“${q}”。要求：请严格按照以下四个板块进行回复：1.短引 2.解释 3.常见误解 4.修持提示。内容要精炼深刻。` }] }]
+                    contents: [{ parts: [{ text: `请解释佛学概念“${q}”。请严格按此格式回复：
+1.短引：(一句核心引言)
+2.解释：(精炼的定义)
+3.常见误解：(人们常错在哪)
+4.修持提示：(日常怎么练)` }] }]
                 })
             });
             const data = await res.json();
             const text = data.candidates[0].content.parts[0].text;
             appendMsg('gemini', text);
         } catch (e) {
-            appendMsg('gemini', "连接失败，请检查网络。");
+            appendMsg('gemini', "连接失败。请检查 API Key 或网络环境。您可以手动点击录入按钮添加。");
         }
     }
 
@@ -158,18 +238,22 @@
     function closeModal() { document.getElementById('entryModal').style.display = 'none'; }
 
     function saveEntry() {
-        const newTerm = {
-            t: document.getElementById('in-t').value,
+        const newT = document.getElementById('in-t').value;
+        if (!newT) return alert("请填写词条名称");
+        
+        const item = {
+            t: newT,
             q: document.getElementById('in-q').value,
             e: document.getElementById('in-e').value,
             m: document.getElementById('in-m').value,
             p: document.getElementById('in-p').value
         };
-        if (!newTerm.t) return alert("请填写词条名称");
-        myTerms.unshift(newTerm);
+        
+        myTerms.unshift(item); // 添加到最上方
         renderList();
         closeModal();
-        // 清空表单
+        
+        // 清空输入
         ['in-t','in-q','in-e','in-m','in-p'].forEach(id => document.getElementById(id).value = '');
     }
 
