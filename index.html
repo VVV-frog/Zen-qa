@@ -1,1910 +1,243 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>佛学·基础名相词典（50条 · 禅意多层级）</title>
-  <style>
-    :root{
-      --bg1:#0b0f12; --bg2:#0f1716;
-      --text:#e8efe9; --muted:#b7c3bc; --muted2:#91a39a;
-      --line:rgba(255,255,255,.08);
-      --accent:#c7f6de; --accent2:#8fe5c6;
-      --shadow: 0 18px 45px rgba(0,0,0,.45);
-      --radius: 18px; --radius2: 14px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --serif: ui-serif, "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
-      --sans: ui-sans-serif, system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; color:var(--text); font-family:var(--sans);
-      background:
-        radial-gradient(1200px 900px at 20% 10%, rgba(143,229,198,.12), transparent 60%),
-        radial-gradient(1000px 700px at 80% 20%, rgba(199,246,222,.10), transparent 60%),
-        radial-gradient(900px 600px at 50% 95%, rgba(143,229,198,.08), transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      min-height:100vh; overflow-x:hidden;
-    }
-    .grain{
-      pointer-events:none; position:fixed; inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-      mix-blend-mode:overlay; opacity:.22;
-    }
-    header{
-      position:sticky; top:0; z-index:10;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(10,14,16,.85), rgba(10,14,16,.55));
-      border-bottom:1px solid var(--line);
-    }
-    .topbar{
-      max-width:1280px; margin:0 auto; padding:18px 18px 16px;
-      display:flex; gap:14px; align-items:flex-end; justify-content:space-between;
-    }
-    .brand{display:flex; flex-direction:column; gap:6px;}
-    .brand h1{
-      margin:0; font-family:var(--serif);
-      font-weight:650; letter-spacing:.06em; font-size:20px;
-    }
-    .brand .sub{
-      margin:0; color:var(--muted); font-size:12px; letter-spacing:.08em;
-      line-height:1.5; max-width:78ch;
-    }
-    .breathe{
-      display:flex; gap:10px; align-items:center;
-      color:var(--muted2); font-size:12px; user-select:none; white-space:nowrap;
-    }
-    .dot{
-      width:7px; height:7px; border-radius:99px; background:var(--accent2);
-      box-shadow: 0 0 18px rgba(143,229,198,.35);
-      animation: pulse 3.8s ease-in-out infinite;
-    }
-    @keyframes pulse{0%,100%{transform:scale(.9); opacity:.7}50%{transform:scale(1.25); opacity:1}}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>佛学辞海 · 觉知与修持</title>
+    <style>
+        :root {
+            --bg-color: #f4f1ea; 
+            --text-main: #2c2e2f;
+            --text-sub: #696a6c;
+            --zen-gold: #967d5a;
+            --border: #dcd7cc;
+            --card-bg: #ffffff;
+            --accent-soft: #fbfaf8;
+        }
 
-    main{
-      max-width:1280px; margin:0 auto; padding:18px;
-      display:grid; grid-template-columns: 430px 1fr; gap:16px;
-    }
-    .panel{
-      border:1px solid var(--line); border-radius:var(--radius);
-      background: linear-gradient(180deg, rgba(16,24,26,.92), rgba(14,20,22,.88));
-      box-shadow: var(--shadow); overflow:hidden;
-    }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: "PingFang SC", "Hiragino Sans GB", "STSong", "Noto Serif SC", serif;
+            margin: 0;
+            padding: 40px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    /* LEFT */
-    .left{display:flex; flex-direction:column; min-height: calc(100vh - 110px);}
-    .search{
-      padding:14px; border-bottom:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent);
-    }
-    .search input{
-      width:100%; padding:12px 12px; border-radius:12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18); color:var(--text);
-      outline:none; font-size:14px;
-    }
-    .search input::placeholder{color:rgba(183,195,188,.75)}
-    .search .row{
-      margin-top:10px; display:flex; gap:10px; align-items:center; justify-content:space-between;
-    }
-    .tinybtn{
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.14);
-      color:var(--muted);
-      border-radius:12px;
-      padding:8px 10px; font-size:12px; cursor:pointer;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
-      user-select:none; white-space:nowrap;
-    }
-    .tinybtn:hover{transform: translateY(-1px); border-color: rgba(199,246,222,.35)}
-    .hint{font-size:12px; color:rgba(183,195,188,.8); line-height:1.4;}
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 700px;
+        }
 
-    .tree{
-      padding:10px; overflow:auto;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(199,246,222,.28) transparent;
-    }
+        header h1 {
+            font-weight: 300;
+            letter-spacing: 12px;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
 
-    details{
-      border:1px solid transparent; border-radius:14px;
-      padding:6px; margin:6px 0; background: rgba(0,0,0,.10);
-    }
-    details[open]{border-color: rgba(255,255,255,.08); background: rgba(255,255,255,.02);}
-    summary{
-      list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between;
-      padding:8px 10px; border-radius:12px; user-select:none;
-    }
-    summary::-webkit-details-marker{display:none}
-    .sumL{display:flex; gap:10px; align-items:baseline; min-width:0;}
-    .sumTitle{
-      font-family:var(--serif); font-size:14px; letter-spacing:.03em;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .sumCount{
-      font-family:var(--mono); font-size:11px; color:rgba(199,246,222,.9);
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-      padding:4px 7px; border-radius:10px; white-space:nowrap;
-    }
-    .sumCaret{color:rgba(183,195,188,.7); font-size:12px;}
-    .subgroup{margin:6px 0 2px; padding:0 6px 6px;}
+        header .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            letter-spacing: 2px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 0;
+            display: inline-block;
+        }
 
-    .item{
-      padding:10px 10px; border-radius:14px; border:1px solid transparent;
-      cursor:pointer; transition: background .12s ease, border-color .12s ease, transform .12s ease;
-      display:flex; gap:10px; align-items:flex-start;
-      margin:6px 0; background: rgba(0,0,0,.08);
-    }
-    .item:hover{
-      background: rgba(255,255,255,.03);
-      border-color: rgba(255,255,255,.10);
-      transform: translateY(-1px);
-    }
-    .item.active{
-      background: rgba(199,246,222,.07);
-      border-color: rgba(199,246,222,.35);
-    }
-    .badge{
-      font-family:var(--mono); font-size:11px; padding:5px 7px;
-      border-radius:10px; border:1px solid rgba(255,255,255,.12);
-      color:rgba(199,246,222,.95); background: rgba(0,0,0,.18);
-      white-space:nowrap; margin-top:1px;
-    }
-    .meta{display:flex; flex-direction:column; gap:4px; min-width:0;}
-    .meta .t{
-      font-family:var(--serif); font-size:14px; letter-spacing:.03em;
-      margin:0; line-height:1.25; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-    }
-    .meta .s{
-      margin:0; font-size:12px; color:var(--muted); line-height:1.4;
-      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient: vertical; overflow:hidden;
-    }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
-    /* RIGHT */
-    .right{padding:18px 18px 14px; min-height: calc(100vh - 110px); position:relative;}
-    .hero{
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:var(--radius);
-      padding:16px 16px 14px;
-      background:
-        radial-gradient(900px 400px at 20% 20%, rgba(143,229,198,.10), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.03), transparent);
-      box-shadow: 0 0 0 1px rgba(0,0,0,.18) inset;
-    }
-    .title{
-      display:flex; flex-wrap:wrap; gap:10px 12px; align-items:baseline; margin-bottom:10px;
-    }
-    .title h2{
-      margin:0; font-family:var(--serif); font-size:22px; letter-spacing:.05em; font-weight:650;
-    }
-    .small{color:var(--muted); font-size:12px; letter-spacing:.06em; line-height:1.6;}
-    .pillrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
-    .pill{
-      font-size:12px; color:var(--muted);
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.14);
-      padding:6px 10px; border-radius:999px;
-    }
-    .content{margin-top:14px; display:grid; grid-template-columns: 1fr; gap:12px;}
-    .card{
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:var(--radius2);
-      padding:14px;
-      background: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.06));
-    }
-    .card h3{
-      margin:0 0 8px 0;
-      font-size:13px; color:rgba(199,246,222,.92);
-      letter-spacing:.12em; font-weight:650;
-    }
-    .card p{margin:0; color:var(--text); line-height:1.85; font-size:14px;}
-    .card ul{margin:8px 0 0 18px; color:var(--text); line-height:1.85; font-size:14px; padding:0;}
-    .card li{margin:4px 0}
-    .quotes{display:flex; flex-direction:column; gap:10px; margin-top:10px;}
-    blockquote{
-      margin:0; padding:12px 12px;
-      border-left:3px solid rgba(199,246,222,.55);
-      background: rgba(199,246,222,.06);
-      border-radius:12px;
-    }
-    blockquote .q{
-      margin:0; font-family:var(--serif);
-      font-size:14px; line-height:1.75; color:rgba(232,239,233,.96);
-      letter-spacing:.01em;
-    }
-    blockquote .src{margin-top:6px; font-size:12px; color:var(--muted2); letter-spacing:.06em;}
-    .relwrap{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;}
-    .rel{
-      cursor:pointer; user-select:none; font-size:12px; color:rgba(199,246,222,.92);
-      border:1px solid rgba(199,246,222,.25);
-      background: rgba(199,246,222,.06);
-      padding:6px 10px; border-radius:999px;
-      transition: transform .12s ease, border-color .12s ease;
-    }
-    .rel:hover{transform: translateY(-1px); border-color: rgba(199,246,222,.45)}
-    .footer{
-      margin-top:12px; color:rgba(183,195,188,.75);
-      font-size:12px; line-height:1.7; padding:0 2px;
-    }
-    @media (max-width: 1040px){
-      main{grid-template-columns: 1fr}
-      .left,.right{min-height: unset}
-    }
-  </style>
+        .term-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .term-header {
+            padding: 22px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .term-header:hover { background-color: var(--accent-soft); }
+
+        .title-group { display: flex; flex-direction: column; }
+
+        .term-title {
+            font-size: 1.15rem;
+            color: var(--zen-gold);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .term-short-quote {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            font-style: italic;
+        }
+
+        .arrow {
+            font-size: 0.8rem;
+            color: var(--border);
+            transition: transform 0.4s;
+        }
+
+        .term-card.active { border-color: var(--zen-gold); box-shadow: 0 4px 20px rgba(150, 125, 90, 0.1); }
+        .term-card.active .arrow { transform: rotate(180deg); color: var(--zen-gold); }
+
+        .term-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: var(--accent-soft);
+        }
+
+        .term-card.active .term-content { max-height: 1200px; padding-bottom: 25px; border-top: 1px solid #f0eee9; }
+
+        .inner-padding { padding: 10px 30px; }
+
+        .section { margin-bottom: 18px; line-height: 1.8; }
+
+        .label {
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: var(--zen-gold);
+            display: block;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .text { font-size: 0.95rem; color: var(--text-main); text-align: justify; }
+        .warning { color: #8a6d6d; }
+        .practice { padding: 10px; border-left: 2px solid var(--zen-gold); background: #fdfcf9; }
+
+        footer {
+            margin-top: 80px;
+            padding-bottom: 40px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            letter-spacing: 4px;
+        }
+
+        @media (max-width: 600px) {
+            .term-header { padding: 15px 20px; }
+            .inner-padding { padding: 10px 20px; }
+            header h1 { font-size: 1.6rem; letter-spacing: 6px; }
+        }
+    </style>
 </head>
-
 <body>
-  <div class="grain"></div>
 
-  <header>
-    <div class="topbar">
-      <div class="brand">
-        <h1>佛学 · 基础名相词典</h1>
-        <p class="sub">多层级目录（基础名相）：身心结构 · 见地框架 · 修学路径 · 心行烦恼 · 菩萨道 · 生死观。点击词条，读解释、误解提醒、修持提示与经论短引。</p>
-      </div>
-      <div class="breathe" title="提醒：轻轻呼吸，慢一点。">
-        <span class="dot"></span>
-        <span>一呼一吸 · 观照当下</span>
-      </div>
-    </div>
-  </header>
+    <header>
+        <h1>佛学词典</h1>
+        <div class="subtitle">五十词条 · 见地 · 修持</div>
+    </header>
 
-  <main>
-    <!-- Left -->
-    <section class="panel left">
-      <div class="search">
-        <input id="q" placeholder="搜索：中阴 / 五蕴 / 根 / 尘 / 三宝 / 性空 / …" />
-        <div class="row">
-          <div class="hint" id="stat">—</div>
-          <div style="display:flex;gap:8px;">
-            <div class="tinybtn" id="expandAll">全部展开</div>
-            <div class="tinybtn" id="collapseAll">全部收起</div>
-          </div>
-        </div>
-      </div>
-      <div class="tree" id="tree"></div>
-    </section>
+    <div class="container" id="mainContainer"></div>
 
-    <!-- Right -->
-    <section class="panel right">
-      <div class="hero" id="detail"></div>
-      <div class="footer">
-        注：短引用于提示义理与记忆；不同译本措辞可能略有差异。用于实修请依止善知识与可靠传承文本。
-      </div>
-    </section>
-  </main>
+    <footer>—— 愿以此功德 庄严佛净土 ——</footer>
 
-  <script>
-    // ===================== DATA（50条，均归入“基础名相”大类，并补齐 subgroups） =====================
-    const DATA = [
-      // —— 生死观 ——
-      {
-        id:"bardo",
-        cn:"中阴（Bardo）",
-        bo:"bar do",
-        sk:"antarābhava / bardo",
-        group:"基础名相",
-        subgroup:"生死观",
-        brief:"死后至投生前的过渡态；亦泛指一切转变之境。",
-        explain:[
-          "在藏传体系里，中阴最常指“死后到投生前”的过渡阶段；更广义也指梦、禅定、临终等一切从一种状态转到另一种状态的缝隙。",
-          "修中阴的关键不在追求神秘经验，而在训练：当熟悉支撑消失时，觉知能否不散、不恐惧、不被业风卷走。"
-        ],
-        misconceptions:[
-          "把中阴当恐怖故事或玄学传说。",
-          "以为中阴只与死后有关，而忽略日常的‘过渡时刻’。"
-        ],
-        practice:[
-          "练‘转折处醒来’：情绪突变、冲突当下、醒来瞬间先回一口呼吸。",
-          "把‘无常观’做得更细：见起灭，见松开。"
-        ],
-        sutraExamples:[
-          { q:"诸行无常。", src:"三法印（通行）" },
-          { q:"凡所有相，皆是虚妄。", src:"《金刚经》" }
-        ],
-        related:["impermanence","karma","samsara"]
-      },
-      {
-        id:"samsara",
-        cn:"轮回（Saṃsāra）",
-        bo:"'khor ba",
-        sk:"saṃsāra",
-        group:"基础名相",
-        subgroup:"生死观",
-        brief:"被无明与业力牵引的生死相续与当下模式。",
-        explain:[
-          "轮回不只是‘来世’，更像此刻的模式：在苦乐起伏中反复确认一个必须被满足与保护的‘我’。",
-          "它以无明为燃料、以业力为引擎；越执著，越被推着走。"
-        ],
-        misconceptions:[
-          "把轮回当故事，认为与现实心理无关。",
-          "把轮回理解成‘惩罚系统’，忽略习惯链与条件网络。"
-        ],
-        practice:[
-          "识别‘我必须马上满足’的冲动，就是轮回发动机。",
-          "在追逐前问：它能给我究竟安稳吗？"
-        ],
-        sutraExamples:[
-          { q:"三界无安，犹如火宅。", src:"《法华经》（短引）" }
-        ],
-        related:["avidya","karma","dukkha","renunciation"]
-      },
-      {
-        id:"renunciation",
-        cn:"出离心",
-        bo:"nges 'byung",
-        sk:"—",
-        group:"基础名相",
-        subgroup:"生死观",
-        brief:"看清轮回不究竟而生起求解脱的决心。",
-        explain:[
-          "出离心不是厌世，而是看清：轮回的乐不究竟、不可作最终依靠。",
-          "它给修行提供持续动力：不是‘我讨厌世界’，而是‘我不再被假安稳骗走’。"
-        ],
-        misconceptions:[
-          "把出离心当逃避责任或冷漠。",
-          "把出离等同于远离社会，而非转心与转行。"
-        ],
-        practice:[
-          "每次强欲望出现时问：这能带来究竟安稳吗？",
-          "把精力从‘证明自己’转到‘训练心’。"
-        ],
-        sutraExamples:[
-          { q:"知苦。", src:"四圣谛起点（意涵）" }
-        ],
-        related:["four_noble_truths","dukkha","impermanence"]
-      },
-      {
-        id:"nirvana",
-        cn:"涅槃（Nirvāṇa）",
-        bo:"mya ngan las 'das pa",
-        sk:"nirvāṇa",
-        group:"基础名相",
-        subgroup:"生死观",
-        brief:"贪嗔痴熄灭、执取止息的解脱境界。",
-        explain:[
-          "涅槃不是‘去到另一个地方’，更像是烦恼的燃料被抽走：贪嗔痴熄灭、执取止息。",
-          "它对应灭谛：可证、可验。你也能从‘小涅槃’开始：一次不跟随嗔心，就是一次熄灭。"
-        ],
-        misconceptions:[
-          "把涅槃想成死亡或虚无。",
-          "把涅槃当成恒常的快乐感受。"
-        ],
-        practice:[
-          "把‘不执行烦恼’当作每日练习。",
-          "做完任何善行，以回向与空性观护持不生我慢。"
-        ],
-        sutraExamples:[
-          { q:"寂灭为乐。", src:"涅槃义常引句" }
-        ],
-        related:["four_noble_truths","klesha","sunyata"]
-      },
+    <script>
+        const data = [
+            { t: "1) 中阴 (Bardo)", q: "“凡所有相，皆是虚妄。”", e: "在藏传体系里，中阴最常指死后到投生前的过渡阶段；广义也指一切“从一种状态到另一种状态的缝隙”（梦、禅定、临终）。修中阴的关键不是追神秘，而是训练：当熟悉支撑消失时，觉知能否不散、不恐惧、不被业风卷走。", m: "把中阴当恐怖故事；以为只与死后有关。", p: "日常练“转折处醒来”（情绪突变、醒来瞬间、冲突当下）。" },
+            { t: "2) 五蕴 (Skandha)", q: "“照见五蕴皆空。”", e: "色受想行识，是“我与经验”的五个维度：色（身/物质）、受（苦乐中性）、想（辨认表象）、行（意向习气）、识（了别）。观五蕴的意义：看到“我”只是条件拼装，我执就松。", m: "把“识”当固定灵魂；只懂概念不做观修。", p: "情绪起时先定位：受（感受）+ 行（冲动）+ 想（标签）在加固。" },
+            { t: "3) 六根 (Indriya)", q: "“摄护诸根。”", e: "眼耳鼻舌身意，是经验进入的“门”。根本身无过，问题常在根触尘后，心迅速评价、贪取或排斥。佛法讲“摄护根门”，就是在接触点保持清醒。", m: "修行要关掉感官；把“清净”当压抑。", p: "练“看见即看见、听见即听见”，延迟评价半秒。" },
+            { t: "4) 六尘 (Viṣaya)", q: "“应无所住而生其心。”", e: "色声香味触法，尘是“对象/境界”，不是脏。尘不必然引烦恼，烦恼来自执取与拒斥。把尘视作缘起显现，生活就成修行场。", m: "把境界当敌人；以远离尘就等于解脱。", p: "对强诱惑境，练“触—受—想—行”的链条观察。" },
+            { t: "5) 六识 (Vijñāna)", q: "“一切唯心造。”", e: "根尘和合生识：眼识…意识。理解六识能看清：很多痛苦不是境界本身，而是识的分别固化（喜欢/讨厌/我必须）。", m: "把分别当“真实判断”；把意识当“真我”。", p: "在意见冲突时，先看“意识在自证其对”。" },
+            { t: "6) 三宝 (佛法僧)", q: "“归依佛，归依法，归依僧。”", e: "佛是觉醒的可能与典范；法是道路与方法（教法与证法）；僧是同行与护持（清净僧团、善知识）。三宝把人生从“自我中心”转成“觉醒中心”。", m: "把三宝当外在权威；不落到修行方法。", p: "每天自问：今天更靠近佛、法、僧了吗？" },
+            { t: "7) 皈依 (Śaraṇa)", q: "“自净其意。”", e: "皈依是确立方向：以佛为师、以法为路、以僧为伴；承认自己会迷失，所以需要“方向盘”。在藏传常强调依止善知识，使法落地。", m: "把皈依当身份或社交标签。", p: "遇到困难先回到皈依句，稳住心再行动。" },
+            { t: "8) 空性/性空 (Śūnyatā)", q: "“色即是空。”", e: "空性是无自性：万法不独立、不固定、自足。空不是虚无，而是让你在执著处看见：我抓的是“被我固化的相”。空性越深，慈悲越自然。", m: "把空当冷漠；把空当哲学观点。", p: "强执时问：它依什么条件成立？条件一变还成立吗？" },
+            { t: "9) 缘起", q: "“此有故彼有。”", e: "依条件而生灭：此有故彼有。缘起避免两边：不是注定（常见），也不是无因（断见）。它是空性的可操作版本：改变条件，就改变结果。", m: "把缘起当“找借口”；忽视内在条件（心行）。", p: "把坏情绪当缘起事件：睡眠、饮食、念头、关系都是条件。" },
+            { t: "10) 无常 (Anitya)", q: "“如梦幻泡影。”", e: "粗无常（明显变化）与细无常（刹那生灭）。修无常不是消沉，而是把心从“把可变当可靠”里叫醒，生珍惜与精进。", m: "拿无常当安慰，却不修；或变成悲观。", p: "每天观一件“理所当然”的事其实不保证。" },
+            { t: "11) 无我 (Anātman)", q: "“诸法无我。”", e: "无我是否定恒常主宰的实体我。经验与责任仍在，但不必绑成“我必须永远正确/安全”。无我让心更柔软、更能利他。", m: "把无我当虚无；用无我逃避责任。", p: "冲突时找“我必须赢”的紧抓，把它拆成感受与想法。" },
+            { t: "12) 苦 (Duḥkha)", q: "“诸行皆苦。”", e: "三苦：苦苦（痛苦本身）、坏苦（乐会变质）、行苦（无常推动下的隐性紧绷）。看见苦，是为生出出离与修道意愿。", m: "把佛法当悲观；只把苦当情绪。", p: "乐起时观坏苦；平淡时观行苦（隐性不安）。" },
+            { t: "13) 四圣谛", q: "“知苦断集，证灭修道。”", e: "苦（现象）、集（原因：贪嗔痴与执取）、灭（可止息）、道（可实践之路）。像医学：诊断—病因—可治—处方。", m: "只背不练；把集谛归咎外部。", p: "遇困用四谛拆解：这是什么苦？它靠什么维持？松哪里？" },
+            { t: "14) 八正道", q: "“正念正定。”", e: "正见正思惟正语正业正命正精进正念正定，可归纳三学：戒定慧。八正道是让心越来越不被烦恼操控的训练体系。", m: "把“正”当道德评判别人。", p: "每天选一项做微调：更诚实一点、更不伤害一点。" },
+            { t: "15) 三学 (戒定慧)", q: "“诸恶莫作，众善奉行。”", e: "戒让生活减少后悔与伤害；定让心可用可稳；慧让你不再被错认绑架。三者互相喂养：戒令心轻，定令心稳，慧令心解。", m: "只修定不修戒；或只谈慧不修定。", p: "先把生活“降噪”（戒），再训练“单点稳定”（定），最后观照“执著结构”（慧）。" },
+            { t: "16) 戒 (Śīla)", q: "“摄护诸根。”", e: "戒不是束缚，而是减少伤害与散乱的“生活算法”。它保护你不被冲动牵走，让心更清明、更容易入定与生慧。", m: "把戒当形式；或当压抑欲望。", p: "从“少说伤人话、少做后悔事”开始。" },
+            { t: "17) 定 (Samādhi)", q: "“制心一处，无事不办。”", e: "定是心的稳定与可用性：不散乱、不昏沉、清晰。定不是麻木，而是让觉知更亮。", m: "把定当“什么都不想”；追求境界。", p: "每天10分钟，数息或观呼吸，重在“回到所缘”。" },
+            { t: "18) 慧 (Prajñā)", q: "“照见五蕴皆空。”", e: "慧是洞见：看清无常、无我、缘起性空。慧不是聪明，而是穿透执著的能力；能让慈悲更不黏着、更有效。", m: "把知识当智慧；用智慧压情绪。", p: "每次强情绪出现，都问：它是“固定事实”还是“缘起过程”？" },
+            { t: "19) 止 (Śamatha)", q: "“心不散乱。”", e: "止是训练心安住：稳定、清晰、持续。止不是压念头，而是建立“随时能回来的能力”。", m: "把止当呆坐；越压越乱。", p: "以呼吸为所缘，走神即温柔带回。" },
+            { t: "20) 观 (Vipaśyanā)", q: "“观受是苦。”", e: "观是洞见：观身心起灭、观苦无常无我、观缘起性空。观不是想更多，而是看更准：执著在哪里成立。", m: "把观变成思辨；陷入分析瘫痪。", p: "观“感受的生灭”比观“道理”更直接。" },
+            { t: "21) 四念处", q: "“观身如身。”", e: "身受心法四个落点：观身不净/无常，观受是苦，观心无常，观法无我。它是把正念落回现实的“通用底盘”。", m: "把正念当放空；只在顺境用。", p: "情绪越大越要回四念处：先身，再受，再心。" },
+            { t: "22) 正念 (Smṛti)", q: "“念住。”", e: "正念是不忘失所缘、清清楚楚觉察当下；并含“记得修行方向”。它让你在自动反应前多一个选择。", m: "正念=放松；或=控制别人。", p: "设置“提醒点”：开门、喝水、解锁手机时回一口呼吸。" },
+            { t: "23) 三法印", q: "“诸行无常，诸法无我。”", e: "无常、苦、无我（+涅槃寂静）。它们是“检验是否为佛法”的核心标记，也是观修最稳的方向。", m: "当成口号；不对应身心经验。", p: "每天任选一印，拿现实事例验证。" },
+            { t: "24) 二谛 (世俗/胜义)", q: "“不坏世俗而说胜义。”", e: "世俗谛层面因果运作、语言沟通；胜义谛层面照见空性。二谛不是两套真理，而是同一现实的两种视角：不落常断。", m: "拿胜义否定因果；或只停在世俗不见空。", p: "做事按世俗负责，心上按胜义松开。" },
+            { t: "25) 中道 (Madhyamā)", q: "“离二边见。”", e: "中道避两边：常见（以为有固定实体）与断见（以为全无因果）。中道就是缘起性空：不执有、不堕无。", m: "把中道当折中主义。", p: "遇到极端结论时问：我是不是在“固定化”或“全盘否定”？" },
+            { t: "26) 十二因缘", q: "“此有故彼有。”", e: "无明—行—识—名色—六入—触—受—爱—取—有—生—老死。它解释苦如何被点燃与延续，也指出“断链点”：在触/受/爱处醒来。", m: "当成玄学轮回图；忽视当下心理链。", p: "重点观“触—受—爱”：最贴近日常。" },
+            { t: "27) 业 (Karma)", q: "“自作自受。”", e: "业是身口意造作在相续中留下的倾向与力量：重复则加深，觉察则松动。业不是惩罚，是“习惯的物理学”。", m: "把业当宿命；用业解释一切而不行动。", p: "观察自己最常见的三种自动反应，逐一改一个小条件。" },
+            { t: "28) 轮回 (Saṃsāra)", q: "“三界无安，犹如火宅。”", e: "轮回不仅是来世，更是此刻模式：在苦乐里反复确认“我”。轮回以无明为燃料，以业力为引擎。", m: "把轮回当故事，与现实无关。", p: "识别“我必须马上满足”的冲动，就是轮回发动机。" },
+            { t: "29) 出离心", q: "“知苦。”", e: "出离心不是厌世，而是看清：轮回的乐不究竟，不能作最终依靠。它给修行提供持续动力。", m: "把出离当逃避责任或冷漠。", p: "在“追逐”之前问：这能给我究竟安稳吗？" },
+            { t: "30) 涅槃 (Nirvāṇa)", q: "“寂灭为乐。”", e: "涅槃是贪嗔痴熄灭、执取止息的解脱境界；不是“去到别处”，而是心不再被逼迫。", m: "把涅槃想成死亡；或想成永恒快乐境界。", p: "从小涅槃入手：一次不跟随嗔心，就是一次熄灭。" },
+            { t: "31) 烦恼 (Kleśa)", q: "“烦恼即菩提。”", e: "烦恼是染污心的力量，使心不自由：贪嗔痴慢疑等。烦恼不是“你坏”，而是“你被抓住了”。", m: "把烦恼当敌人；用自责加重它。", p: "三步：命名（嗔/贪）—允许存在—不执行它。" },
+            { t: "32) 贪 (Rāga)", q: "“爱为苦本。”", e: "对可爱境的抓取黏著；常以“我需要它才能好”为理由。贪会制造焦虑与匮乏感。", m: "以为只要压住欲望就行。", p: "练“满足感延迟”：先三口呼吸再决定。" },
+            { t: "33) 嗔 (Dveṣa)", q: "“怨亲平等。”", e: "对不可爱境的排斥敌对；嗔常伪装成“正义感”。嗔烧掉当下的清明，也烧掉关系的空间。", m: "把嗔当力量；把忍辱当软弱。", p: "嗔起先护身口：不发言、不发送，先离开两分钟。" },
+            { t: "34) 痴/无明 (Avidyā)", q: "“无明缘行。”", e: "不明缘起无我，误认有实我实法，是轮回的根本燃料。无明不等于智商低，而是“错认”。", m: "把无明当笨；忽略微细执著。", p: "每天观一个执著：它真有自性吗？" },
+            { t: "35) 慢 (Māna)", q: "“随喜功德。”", e: "比较心与自我优越/自卑的固化；慢不只傲慢，也包括“我不如人”的反面慢。", m: "以为只有强者才慢。", p: "把比较转换为随喜：见他人善，心说“愿我亦得”。" },
+            { t: "36) 疑 (Vicikitsā)", q: "“信为道元功德母。”", e: "疑是摇摆不定、无法入道的心；合理提问是“慧”，但让你不修不行的疑是“障”。", m: "把逃避修行包装成理性。", p: "给疑一个期限：先实践14天，再评估。" },
+            { t: "37) 信 (Śraddhā)", q: "“信为道元。”", e: "信不是盲从，而是基于观察与体验的信心：信可证、可信因果、可信修行路径。信能让心有能量持续。", m: "把信当迷信；或只信上师不信法。", p: "把信落到“可验证”：每天一小段修行，看心是否更自由。" },
+            { t: "38) 精进 (Vīrya)", q: "“勤修善法。”", e: "精进不是硬扛，而是持续向善向觉醒的能量。精进包含：发起、持续、欢喜、善巧。", m: "把精进当自我逼迫。", p: "用“小而稳”：每天固定10分钟胜过偶尔2小时。" },
+            { t: "39) 忍辱 (Kṣānti)", q: "“忍辱为第一道。”", e: "忍辱不是挨打不还，而是在刺激中不被嗔心牵走的能力。它保护清明与慈悲，使智慧能运作。", m: "把忍辱当软弱或讨好。", p: "被冒犯时先处理身体：放松下颌、肩、腹，再回应。" },
+            { t: "40) 布施 (Dāna)", q: "“布施得福。”", e: "布施不仅是给钱，也包括法施、无畏施。布施在根本上训练“松开抓取”，对治贪与匮乏感。", m: "布施是交易求回报。", p: "练“无痕布施”：不让对方欠你人情。" },
+            { t: "41) 持戒 (六度之一)", q: "“诸恶莫作。”", e: "作为六度的持戒，更强调“以不害为基础的利他生活方式”。戒让你成为更可靠的人，也让心更容易清净。", m: "把戒当“对外形象”。", p: "先守“口业”：少讥讽、少背后议论。" },
+            { t: "42) 禅定 (六度之一)", q: "“正定。”", e: "作为六度的禅定，不只是专注，更是“与觉知同在”的安住。它让慈悲不被情绪吞没，让智慧不被散乱盖住。", m: "把定当逃避现实。", p: "每天一次“停机”：3分钟只觉呼吸与身体。" },
+            { t: "43) 般若 (六度之一)", q: "“无智亦无得。”", e: "般若是照见性空缘起的智慧；它让布施不执相、持戒不自义、忍辱不压抑。般若使六度成为到彼岸的“度”。", m: "把般若当聪明或口才。", p: "做善事后回向并观“无我无相”，防止功德变我慢。" },
+            { t: "44) 菩提心 (Bodhicitta)", q: "“为利有情愿成佛。”", e: "为利一切众生而求成佛之心。分愿菩提心（发愿）与行菩提心（六度等实践）。它把修行从“我想变好”转为“愿众生离苦得乐”。", m: "把菩提心当情绪感动；不落到行动。", p: "每天一次：把一个小善行明确回向给具体人群。" },
+            { t: "45) 慈 (Maitrī)", q: "“愿一切众生得乐。”", e: "慈是愿众生得乐的心。慈不是纵容，而是希望对方得到真正的利益（包括离开恶业与迷惑）。", m: "把慈当讨好或无底线。", p: "对自己也修慈：对自己说“愿我安稳清明”。" },
+            { t: "46) 悲 (Karuṇā)", q: "“大悲为根本。”", e: "悲是见众生苦而愿其离苦的心。悲不是情绪崩溃，而是稳定而有行动力的柔软。", m: "悲=同情到被拖垮。", p: "先稳住呼吸与身体，再做一件可行的小帮助。" },
+            { t: "47) 喜 (Muditā)", q: "“随喜功德。”", e: "喜是随喜他人善与乐。它对治嫉妒与比较心，让心更宽广、更有福德。", m: "随喜=虚伪恭维。", p: "每天找一件别人做得好的事，真诚随喜一次。" },
+            { t: "48) 舍 (Upekṣā)", q: "“怨亲平等。”", e: "舍是平等心：不被亲疏爱憎绑架。舍不是冷漠，而是稳定、公正、能承载慈悲。", m: "舍=不在乎。", p: "对“讨厌的人”练一句：他也想快乐，只是方法错了。" },
+            { t: "49) 回向 (Pariṇāmanā)", q: "“愿以此功德，庄严佛净土。”", e: "把善行功德导向众生与菩提，避免功德落入我执与我慢。回向不是“把功德给出去就没了”，而是让心量更大、福德更稳。", m: "回向像转账；不回向就“丢功德”。", p: "做完任何善事，立刻一句回向：愿众生离苦得乐。" },
+            { t: "50) 忏悔 (净罪)", q: "“罪从心起将心忏。”", e: "忏悔是承认过失并发愿不再重复，让心从否认与自责中解脱。常以“四力”（依止力、破恶力、对治力、恢复力）来完成真实转化。", m: "忏悔=自我羞辱；或念一遍就清零。", p: "关键在“具体”：承认哪件事、伤害何处、下一次怎么做。" }
+        ];
 
-      // —— 身心结构 ——
-      {
-        id:"skandha",
-        cn:"五蕴（Skandha）",
-        bo:"phung po lnga",
-        sk:"skandha",
-        group:"基础名相",
-        subgroup:"身心结构",
-        brief:"色受想行识：构成‘我与经验’的五个维度。",
-        explain:[
-          "五蕴是把经验拆成五个维度：色（身/物质）、受（苦乐中性）、想（辨认表象）、行（意向习气）、识（了别作用）。",
-          "观五蕴的意义：看到所谓‘我’是条件拼装，就更容易松开我执。"
-        ],
-        misconceptions:[
-          "把‘识’当固定灵魂。",
-          "只懂概念，不做观修。"
-        ],
-        practice:[
-          "情绪起时先定位：受（感受）+行（冲动）+想（标签）正在加固。",
-          "坐禅时按五蕴扫描：身、感受、念头、冲动、觉知。"
-        ],
-        sutraExamples:[
-          { q:"照见五蕴皆空。", src:"《般若波罗蜜多心经》" }
-        ],
-        related:["anatman","sunyata","pratityasamutpada"]
-      },
-      {
-        id:"six_roots",
-        cn:"六根（眼耳鼻舌身意）",
-        bo:"dbang po drug",
-        sk:"indriya",
-        group:"基础名相",
-        subgroup:"身心结构",
-        brief:"经验进入的‘门’：根触境时最易生执取。",
-        explain:[
-          "六根是经验进入的门。根本身无过，问题常在根触尘后，心迅速评价与抓取/排斥。",
-          "‘摄护根门’就是在接触点保持清醒，让反应慢半拍。"
-        ],
-        misconceptions:[
-          "修行要关掉感官。",
-          "把清净当压抑。"
-        ],
-        practice:[
-          "练‘看见即看见、听见即听见’，延迟评价半秒。",
-          "减少多余刺激（信息/刷屏）让根门更容易安住。"
-        ],
-        sutraExamples:[
-          { q:"摄护诸根。", src:"阿含/戒学常用句（意涵）" }
-        ],
-        related:["six_dusts","six_consciousness","mindfulness"]
-      },
-      {
-        id:"six_dusts",
-        cn:"六尘（色声香味触法）",
-        bo:"yul drug",
-        sk:"viṣaya / artha",
-        group:"基础名相",
-        subgroup:"身心结构",
-        brief:"对象/境界：尘非脏，执取才是苦因。",
-        explain:[
-          "六尘指六类对象/境界。尘不必然引烦恼，烦恼来自执取与拒斥。",
-          "把尘视作缘起显现，生活就成修行场。"
-        ],
-        misconceptions:[
-          "把境界当敌人。",
-          "以为远离尘就等于解脱。"
-        ],
-        practice:[
-          "对强诱惑境观察：触—受—爱/憎在何处发生？",
-          "把‘评价’当成可见对象，而不是事实。"
-        ],
-        sutraExamples:[
-          { q:"应无所住而生其心。", src:"《金刚经》" }
-        ],
-        related:["six_roots","twelve_links","dukkha"]
-      },
-      {
-        id:"six_consciousness",
-        cn:"六识（眼识…意识）",
-        bo:"rnam shes drug",
-        sk:"vijñāna",
-        group:"基础名相",
-        subgroup:"身心结构",
-        brief:"根尘和合而生的了别作用；分别固化常制造苦。",
-        explain:[
-          "六识是根尘和合生起的了别作用：眼识到意识。",
-          "理解六识能看清：很多痛苦不是境界本身，而是识的分别固化（喜欢/讨厌/必须）。"
-        ],
-        misconceptions:[
-          "把分别当‘真实判断’。",
-          "把意识当‘真我’。"
-        ],
-        practice:[
-          "争执时先看：意识在自证其对，还是在求理解？",
-          "练‘只是想法’：把念头当对象而非命令。"
-        ],
-        sutraExamples:[
-          { q:"一切唯心造。", src:"《华严经》（常引）" }
-        ],
-        related:["skandha","anatman","sunyata"]
-      },
-      {
-        id:"root_indriya",
-        cn:"根（根门/根器）",
-        bo:"dbang po",
-        sk:"indriya",
-        group:"基础名相",
-        subgroup:"身心结构",
-        brief:"感官能力与心门；亦可指修学的承载能力。",
-        explain:[
-          "‘根’常指感官根：能取境、能生识；也可泛指根器（承载与领受教法的能力）。",
-          "修持上谈‘守根门’，意为根触境时保持觉知，不被贪嗔牵走。"
-        ],
-        misconceptions:[
-          "误以为修行要‘关掉感官’。",
-          "把根器当命定天赋而放弃训练。"
-        ],
-        practice:[
-          "在日常刺激点（手机、评价）练‘先觉察再反应’。",
-          "把根器当可培养：稳住作息与戒行，根器自然增长。"
-        ],
-        sutraExamples:[
-          { q:"摄护诸根。", src:"戒学常用语（意涵）" }
-        ],
-        related:["six_roots","mindfulness","sila"]
-      },
-      {
-        id:"dust_artha",
-        cn:"尘（境/所缘）",
-        bo:"yul",
-        sk:"viṣaya",
-        group:"基础名相",
-        subgroup:"身心结构",
-        brief:"对象与境界；关键在不取不舍而保持清醒。",
-        explain:[
-          "‘尘’在佛学里多指对象/境界，不是脏。烦恼来自执取与排斥。",
-          "把尘看成缘起显现，能在境界里练习松开与明觉。"
-        ],
-        misconceptions:[
-          "把尘当敌人，越压越强。",
-          "把远离境界当成唯一修行。"
-        ],
-        practice:[
-          "选择一个常见境界（刷屏/甜食）观察：是尘强，还是爱取强？",
-          "练‘看见—承认—放下’三步。"
-        ],
-        sutraExamples:[
-          { q:"一切唯心造。", src:"《华严经》（常引）" }
-        ],
-        related:["six_dusts","lojong","sunyata"]
-      },
-
-      // —— 见地框架 ——
-      {
-        id:"sunyata",
-        cn:"空性/性空（Śūnyatā）",
-        bo:"stong pa nyid",
-        sk:"śūnyatā",
-        group:"基础名相",
-        subgroup:"见地框架",
-        brief:"无自性：缘起故空，空故能起。",
-        explain:[
-          "空性不是虚无，而是无自性：万法不独立、不固定、自足。",
-          "空性不是为了赢辩论，而是为了在执著最紧处看见：我抓的是被固化的相。空越深，慈悲越自然。"
-        ],
-        misconceptions:[
-          "把空当冷漠或否定因果。",
-          "把空当观点，而不落到当下执著处。"
-        ],
-        practice:[
-          "强执时问：它依什么条件成立？条件一变还成立吗？",
-          "在关系中练：不把对方固定成标签。"
-        ],
-        sutraExamples:[
-          { q:"色即是空。", src:"《心经》" }
-        ],
-        related:["pratityasamutpada","two_truths","middle_way"]
-      },
-      {
-        id:"pratityasamutpada",
-        cn:"缘起（Pratītyasamutpāda）",
-        bo:"rten 'brel",
-        sk:"pratītyasamutpāda",
-        group:"基础名相",
-        subgroup:"见地框架",
-        brief:"依条件而起：此有故彼有，此生故彼生。",
-        explain:[
-          "缘起强调关系性：一切经验都在条件网络里生灭。",
-          "它避免两边：不是注定不变（常见），也不是无因无果（断见）。"
-        ],
-        misconceptions:[
-          "把缘起当借口，逃避责任。",
-          "只看外因，不看心行与习气。"
-        ],
-        practice:[
-          "把坏情绪当缘起事件：睡眠、饮食、念头、关系都是条件。",
-          "练‘条件视角’：先改一条最小条件。"
-        ],
-        sutraExamples:[
-          { q:"此有故彼有。", src:"缘起经典句（短引）" },
-          { q:"此灭故彼灭。", src:"缘起经典句（短引）" }
-        ],
-        related:["twelve_links","karma","sunyata"]
-      },
-      {
-        id:"impermanence",
-        cn:"无常（Anitya）",
-        bo:"mi rtag pa",
-        sk:"anitya",
-        group:"基础名相",
-        subgroup:"见地框架",
-        brief:"一切有为法刹那变异；由此生珍惜与精进。",
-        explain:[
-          "无常有粗细两层：粗无常（明显变化）与细无常（刹那生灭）。",
-          "修无常不是消沉，而是把心从‘把可变当可靠’里叫醒。"
-        ],
-        misconceptions:[
-          "拿无常当安慰却不修。",
-          "把无常变成悲观与放弃。"
-        ],
-        practice:[
-          "每天观一件‘理所当然’的事其实不保证。",
-          "把遗憾与珍惜合在一起：因此更愿意当下行善。"
-        ],
-        sutraExamples:[
-          { q:"诸行无常。", src:"三法印（通行）" },
-          { q:"如梦幻泡影。", src:"《金刚经》（短引）" }
-        ],
-        related:["dukkha","bardo","four_noble_truths"]
-      },
-      {
-        id:"anatman",
-        cn:"无我（Anātman）",
-        bo:"bdag med",
-        sk:"anātman",
-        group:"基础名相",
-        subgroup:"见地框架",
-        brief:"不见恒常主宰的实体我；经验仍在但不必固化成‘我’。",
-        explain:[
-          "无我不是否认经验，而是否认一个恒常主宰的自我实体。",
-          "以五蕴与缘起来观察：所谓‘我’，更像被习惯持续拼接的叙事。"
-        ],
-        misconceptions:[
-          "把无我当‘我不存在’的虚无。",
-          "用无我逃避责任与关系。"
-        ],
-        practice:[
-          "在争执中观察：‘我必须赢’的紧抓来自哪里？",
-          "把‘我’改写为：此刻正在发生的身心过程。"
-        ],
-        sutraExamples:[
-          { q:"诸法无我。", src:"三法印（通行）" }
-        ],
-        related:["skandha","sunyata","pratityasamutpada"]
-      },
-      {
-        id:"dukkha",
-        cn:"苦（Duḥkha）",
-        bo:"sdug bsngal",
-        sk:"duḥkha",
-        group:"基础名相",
-        subgroup:"见地框架",
-        brief:"有为经验的不圆满：苦苦、坏苦、行苦。",
-        explain:[
-          "佛法谈‘苦’不是否定快乐，而是指出：一切有为经验都带着不稳与不满足的底色。",
-          "三苦：苦苦（痛苦本身）、坏苦（快乐变质）、行苦（无常推动下的隐性紧绷）。"
-        ],
-        misconceptions:[
-          "把‘苦’理解成悲观与否定人生。",
-          "只把苦当情绪，不看其结构（无常与执取）。"
-        ],
-        practice:[
-          "当愉快出现时问：它能永远吗？",
-          "当不快出现时观察：我在抓什么、抗什么？"
-        ],
-        sutraExamples:[
-          { q:"诸行皆苦。", src:"三法印（通行）" }
-        ],
-        related:["four_noble_truths","samsara","tanha"]
-      },
-      {
-        id:"three_seals",
-        cn:"三法印（+涅槃寂静）",
-        bo:"phyag rgya gsum",
-        sk:"—",
-        group:"基础名相",
-        subgroup:"见地框架",
-        brief:"无常、苦、无我（+涅槃寂静）：检验佛法的核心标记。",
-        explain:[
-          "三法印是观修最稳的方向：无常、苦、无我；加上涅槃寂静，构成四法印表述。",
-          "它们不是口号，而是用来检验经验与修行路线是否对齐。"
-        ],
-        misconceptions:[
-          "当成背诵口号，不对应身心经验。",
-          "只拿来讲别人，不用来照自己。"
-        ],
-        practice:[
-          "每天任选一印，用真实经历验证一次。",
-          "用无常松执，用无我软化比较，用苦认清轮回。"
-        ],
-        sutraExamples:[
-          { q:"诸行无常。", src:"三法印（通行）" },
-          { q:"诸法无我。", src:"三法印（通行）" }
-        ],
-        related:["impermanence","anatman","nirvana"]
-      },
-      {
-        id:"two_truths",
-        cn:"二谛（世俗谛/胜义谛）",
-        bo:"bden pa gnyis",
-        sk:"satya-dvaya",
-        group:"基础名相",
-        subgroup:"见地框架",
-        brief:"同一现实两种视角：世俗运作因果，胜义照见空性。",
-        explain:[
-          "世俗谛层面：因果与语言沟通成立；胜义谛层面：照见空性无自性。",
-          "二谛不是两套真理，而是同一现实的两种观看方式：不落常断。"
-        ],
-        misconceptions:[
-          "拿胜义否定因果（‘反正都空’）。",
-          "只停在世俗，不愿照见执著结构。"
-        ],
-        practice:[
-          "做事按世俗负责，心上按胜义松开。",
-          "遇到极端结论时回二谛：我是在否定因果还是在固化实体？"
-        ],
-        sutraExamples:[
-          { q:"不坏世俗而说胜义。", src:"中观精神（意涵）" }
-        ],
-        related:["middle_way","sunyata","karma"]
-      },
-      {
-        id:"middle_way",
-        cn:"中道（Madhyamā）",
-        bo:"dbu ma",
-        sk:"madhyamā",
-        group:"基础名相",
-        subgroup:"见地框架",
-        brief:"离常离断：不执有、不堕无；以缘起性空为核心。",
-        explain:[
-          "中道避两边：常见（实体论）与断见（虚无论）。",
-          "中道不是折中，而是‘缘起性空’：不执实有，也不否定因果与世俗运作。"
-        ],
-        misconceptions:[
-          "把中道当模糊折中主义。",
-          "把中道当‘什么都行’。"
-        ],
-        practice:[
-          "遇到极端结论时问：我是否在固定化？或在全盘否定？",
-          "用缘起检验：它依什么条件成立？"
-        ],
-        sutraExamples:[
-          { q:"离二边见。", src:"中观要点（意涵）" }
-        ],
-        related:["two_truths","sunyata","pratityasamutpada"]
-      },
-
-      // —— 修学路径 ——
-      {
-        id:"three_jewels",
-        cn:"三宝（佛法僧）",
-        bo:"dkon mchog gsum",
-        sk:"triratna",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"以佛为师、以法为道、以僧为伴：修学依归。",
-        explain:[
-          "佛是觉醒的可能与典范；法是道路与方法（教证二法）；僧是护持与同行（清净僧团/善知识）。",
-          "三宝把人生的轴心从‘自我中心’转到‘觉醒中心’。"
-        ],
-        misconceptions:[
-          "把三宝当外在权威，不落到方法。",
-          "只崇敬，不实践。"
-        ],
-        practice:[
-          "每天一句三皈依，提醒方向。",
-          "用‘法’解决问题：先正念、再观察、再行动。"
-        ],
-        sutraExamples:[
-          { q:"归依佛，归依法，归依僧。", src:"三皈依偈（通行）" }
-        ],
-        related:["refuge","sila","mindfulness"]
-      },
-      {
-        id:"refuge",
-        cn:"皈依（Śaraṇa）",
-        bo:"skyabs 'gro",
-        sk:"śaraṇa",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"确立生命方向：以觉醒为目标，以正法为方法。",
-        explain:[
-          "皈依不是‘身份’，是立志：以佛为师、以法为路、以僧为伴。",
-          "它承认自己会迷失，所以需要方向盘；也意味着愿意把法落到日常身口意。"
-        ],
-        misconceptions:[
-          "把皈依当社交标签或仪式完成。",
-          "皈依后仍按旧习惯生活不改。"
-        ],
-        practice:[
-          "遇到困难先回皈依句，稳住心再行动。",
-          "把每次冲突当‘皈依测验’：我是在靠烦恼，还是靠法？"
-        ],
-        sutraExamples:[
-          { q:"自净其意。", src:"《法句经》（意涵）" }
-        ],
-        related:["three_jewels","eightfold_path","three_trainings"]
-      },
-      {
-        id:"four_noble_truths",
-        cn:"四圣谛",
-        bo:"bden pa bzhi",
-        sk:"catvāri āryasatyāni",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"苦、集、灭、道：从诊断到处方的修行结构。",
-        explain:[
-          "苦谛：现状不圆满；集谛：导致苦的因（贪嗔痴与执取）；灭谛：可止息；道谛：可行之道。",
-          "它像医学：先诊断，再找病因，再确认可愈，最后给处方。"
-        ],
-        misconceptions:[
-          "只背不练。",
-          "把集谛全归咎外部。"
-        ],
-        practice:[
-          "把任何情绪困境放进四谛拆解：是什么苦？因是什么？能否松一分？下一步做什么？"
-        ],
-        sutraExamples:[
-          { q:"知苦断集，证灭修道。", src:"四谛修学次第（意涵）" }
-        ],
-        related:["dukkha","eightfold_path","nirvana"]
-      },
-      {
-        id:"eightfold_path",
-        cn:"八正道（八支圣道）",
-        bo:"yang dag lam yan lag brgyad",
-        sk:"āryāṣṭāṅgamārga",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"正见到正定的八项训练，可归纳为戒定慧。",
-        explain:[
-          "八正道可归纳为三学：戒（正语正业正命）、定（正精进正念正定）、慧（正见正思惟）。",
-          "它不是道德清单，而是让心越来越不被烦恼操控的训练体系。"
-        ],
-        misconceptions:[
-          "把‘正’当用来评判别人。",
-          "只修一部分，忽略整体配合。"
-        ],
-        practice:[
-          "每天选一项做微调：更诚实一点、更不伤害一点、更清醒一点。",
-          "先稳戒与作息，再加定与慧。"
-        ],
-        sutraExamples:[
-          { q:"正念正定。", src:"道谛要点（通行）" }
-        ],
-        related:["three_trainings","mindfulness","samadhi"]
-      },
-      {
-        id:"three_trainings",
-        cn:"三学（戒定慧）",
-        bo:"bslab pa gsum",
-        sk:"—",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"戒护行、定摄心、慧破执；三者互相喂养。",
-        explain:[
-          "戒减少后悔与伤害，让心轻；定让心稳、可用；慧让你看清错认并松开执著。",
-          "三者互相支持：戒让定更易生，定让慧更锋利，慧让戒更不僵硬。"
-        ],
-        misconceptions:[
-          "只修定不修戒，越修越偏。",
-          "只谈慧不修定，流于口头。"
-        ],
-        practice:[
-          "先‘降噪’（戒），再‘单点稳定’（定），后‘洞见执著结构’（慧）。"
-        ],
-        sutraExamples:[
-          { q:"诸恶莫作，众善奉行。", src:"《法句经》（意涵）" }
-        ],
-        related:["sila","samadhi","prajna"]
-      },
-      {
-        id:"sila",
-        cn:"戒（Śīla）",
-        bo:"tshul khrims",
-        sk:"śīla",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"不害与清净的生活算法：减少伤害与散乱。",
-        explain:[
-          "戒不是束缚，而是减少伤害与散乱的‘生活算法’：让你不被冲动牵走。",
-          "戒保护你不落悔恨，使心更清明，更容易入定生慧。"
-        ],
-        misconceptions:[
-          "把戒当形式或对外形象。",
-          "把清净当压抑欲望。"
-        ],
-        practice:[
-          "从口业开始：少讥讽、少背后议论、少情绪化发言。",
-          "对易破点设置‘缓冲’：想说前先呼吸三次。"
-        ],
-        sutraExamples:[
-          { q:"摄护诸根。", src:"戒学要点（意涵）" }
-        ],
-        related:["mindfulness","six_roots","three_trainings"]
-      },
-      {
-        id:"samadhi",
-        cn:"定（Samādhi）",
-        bo:"ting nge 'dzin",
-        sk:"samādhi",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"心的稳定与可用性：不散乱、不昏沉、清晰。",
-        explain:[
-          "定不是麻木，而是让觉知更亮：心能持续安住在所缘上。",
-          "有了定，观照才不易变成分析瘫痪。"
-        ],
-        misconceptions:[
-          "把定当‘什么都不想’。",
-          "追求境界与神秘感。"
-        ],
-        practice:[
-          "每天10分钟数息/观呼吸：走神即温柔带回。",
-          "先把睡眠和作息稳住，定更容易生。"
-        ],
-        sutraExamples:[
-          { q:"制心一处，无事不办。", src:"禅修格言（常引）" }
-        ],
-        related:["shamatha","vipashyana","three_trainings"]
-      },
-      {
-        id:"prajna",
-        cn:"慧/般若（Prajñā）",
-        bo:"shes rab",
-        sk:"prajñā",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"照见缘起无自性的洞察力：让心真正松开执著。",
-        explain:[
-          "慧不是聪明，而是能穿透错认：看清无常、无我、缘起性空。",
-          "慧让慈悲更不黏着、更有效；也让修行不落僵硬。"
-        ],
-        misconceptions:[
-          "把知识当智慧。",
-          "用‘道理’压过情绪与现实问题。"
-        ],
-        practice:[
-          "每次强情绪出现都问：这是固定事实，还是缘起过程？",
-          "做善行后回向并观无我，防止功德生我慢。"
-        ],
-        sutraExamples:[
-          { q:"照见五蕴皆空。", src:"《心经》" }
-        ],
-        related:["sunyata","two_truths","vipashyana"]
-      },
-      {
-        id:"shamatha",
-        cn:"止（奢摩他）",
-        bo:"zhi gnas",
-        sk:"śamatha",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"训练心安住：稳定、清晰、持续。",
-        explain:[
-          "止不是压念头，而是建立‘随时能回来的能力’：走神能回、能住、越来越清楚。",
-          "止修好，观才不至于变成只想道理。"
-        ],
-        misconceptions:[
-          "把止当呆坐或压抑。",
-          "把走神当失败而自责。"
-        ],
-        practice:[
-          "走神=发现=成功：温柔带回所缘。",
-          "用更小的目标：每次只守住一口气。"
-        ],
-        sutraExamples:[
-          { q:"心不散乱。", src:"禅修要点（意涵）" }
-        ],
-        related:["samadhi","mindfulness","vipashyana"]
-      },
-      {
-        id:"vipashyana",
-        cn:"观（毗婆舍那）",
-        bo:"lhag mthong",
-        sk:"vipaśyanā",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"洞见身心起灭与无自性：看清执著如何成立。",
-        explain:[
-          "观不是想更多，而是看得更准：观察身心起灭、无常苦无我、缘起性空。",
-          "观的落点是执著处：我在哪里把过程当实体？"
-        ],
-        misconceptions:[
-          "把观变成思辨与推理竞赛。",
-          "陷入分析瘫痪。"
-        ],
-        practice:[
-          "优先观感受的生灭，比观概念更直接。",
-          "‘只看三件事’：身体反应、感受变化、抓取/排斥的冲动。"
-        ],
-        sutraExamples:[
-          { q:"观受是苦。", src:"四念处类教法（短引）" }
-        ],
-        related:["prajna","four_foundations","shamatha"]
-      },
-      {
-        id:"four_foundations",
-        cn:"四念处",
-        bo:"dran pa nye bar gzhag pa bzhi",
-        sk:"smṛtyupasthāna",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"观身受心法：把正念落回现实的通用底盘。",
-        explain:[
-          "四念处给了四个落点：身、受、心、法。它把正念从抽象带回具体经验。",
-          "当情绪大、局面乱时，四念处能让你重新站稳：先回身体，再看感受，再看心，再看法。"
-        ],
-        misconceptions:[
-          "把正念当放空或麻木。",
-          "只在顺境练，逆境全丢。"
-        ],
-        practice:[
-          "情绪越大越回‘身与受’：先放松肩颌腹，再看苦乐中性。",
-          "每天固定一段‘身念处’：走路时觉脚掌。"
-        ],
-        sutraExamples:[
-          { q:"观身如身。", src:"四念处精神（意涵）" }
-        ],
-        related:["mindfulness","vipashyana","dukkha"]
-      },
-      {
-        id:"mindfulness",
-        cn:"正念（Smṛti）",
-        bo:"dran pa",
-        sk:"smṛti",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"不忘所缘、清清楚楚觉察当下；给反应留出选择空间。",
-        explain:[
-          "正念是不忘失所缘、清清楚楚觉察当下，并记得修行方向。",
-          "它让你在自动反应之前，多一个‘看见’与‘选择’。"
-        ],
-        misconceptions:[
-          "正念=放松；或=控制别人。",
-          "把正念当成情绪消除术。"
-        ],
-        practice:[
-          "设置提醒点：开门、喝水、解锁手机时回一口呼吸。",
-          "把‘觉察到走神’当成胜利，而非失败。"
-        ],
-        sutraExamples:[
-          { q:"念住。", src:"念处法门核心词（意涵）" }
-        ],
-        related:["four_foundations","shamatha","sila"]
-      },
-
-      // —— 心行烦恼 ——
-      {
-        id:"twelve_links",
-        cn:"十二因缘",
-        bo:"yan lag bcu gnyis",
-        sk:"dvādaśāṅga",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"无明到老死的链条；关键断点常在触/受/爱处。",
-        explain:[
-          "十二因缘解释苦如何生起与延续：无明—行—识—名色—六入—触—受—爱—取—有—生—老死。",
-          "对日常最有用的是‘触—受—爱’：很多轮回从这里启动。"
-        ],
-        misconceptions:[
-          "当作玄学轮回图，与当下心理无关。",
-          "只看后段果报，不看前段起心动念。"
-        ],
-        practice:[
-          "在触受处醒来：一有刺激，先觉呼吸与身体，再看感受。",
-          "训练‘受不必变爱’：感受只是感受。"
-        ],
-        sutraExamples:[
-          { q:"无明缘行。", src:"十二因缘（短引）" }
-        ],
-        related:["pratityasamutpada","tanha","upadana"]
-      },
-      {
-        id:"karma",
-        cn:"业（Karma）",
-        bo:"las",
-        sk:"karma",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"身口意造作的势能与习气：重复加深，觉察松动。",
-        explain:[
-          "业不是惩罚系统，而是行为与心念在相续中留下的倾向与力量。",
-          "业解释了‘我为什么总那样反应’，也给出出路：改变条件与习惯链。"
-        ],
-        misconceptions:[
-          "把业当宿命：反正这样了。",
-          "用业解释一切而不行动。"
-        ],
-        practice:[
-          "识别自己三种最常见自动反应，逐一改一个小条件。",
-          "把‘当下不执行’当作改业的切入口。"
-        ],
-        sutraExamples:[
-          { q:"自作自受。", src:"通行偈义（意涵）" }
-        ],
-        related:["pratityasamutpada","samsara","klesha"]
-      },
-      {
-        id:"klesha",
-        cn:"烦恼（Kleśa）",
-        bo:"nyon mongs",
-        sk:"kleśa",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"贪嗔痴等染污心的力量，使心不自由。",
-        explain:[
-          "烦恼不是‘你坏’，而是‘你被抓住了’：它让心狭窄、急迫、失去自由。",
-          "识别烦恼的第一步，是把它从‘我’里分离出来：它只是来访者。"
-        ],
-        misconceptions:[
-          "把烦恼当敌人，越打越强。",
-          "用自责羞辱加重烦恼。"
-        ],
-        practice:[
-          "三步：命名（贪/嗔）—允许存在—不执行它。",
-          "先护身口：不发言、不发送，等浪头过去。"
-        ],
-        sutraExamples:[
-          { q:"烦恼即菩提。", src:"转化精神（常引意涵）" }
-        ],
-        related:["raga","dvesha","avidya"]
-      },
-      {
-        id:"raga",
-        cn:"贪（Rāga）",
-        bo:"'dod chags",
-        sk:"rāga",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"对可爱境的抓取黏著；常以‘我需要它’为理由。",
-        explain:[
-          "贪把对象当成‘我必须拥有才能好’，于是制造匮乏与焦虑。",
-          "贪并不只关于物质，也包括被认可、被爱、被赢的执取。"
-        ],
-        misconceptions:[
-          "以为压住欲望就够了（越压越强）。",
-          "把贪当成动力，不见其代价。"
-        ],
-        practice:[
-          "满足感延迟：先三口呼吸再决定。",
-          "问自己：我是在求快乐，还是在逃不安？"
-        ],
-        sutraExamples:[
-          { q:"爱为苦本。", src:"四谛意涵（常引）" }
-        ],
-        related:["tanha","upadana","dukkha"]
-      },
-      {
-        id:"dvesha",
-        cn:"嗔（Dveṣa）",
-        bo:"zhe sdang",
-        sk:"dveṣa",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"对不可爱境的排斥敌对；常伪装成‘正义感’。",
-        explain:[
-          "嗔让心燃烧、视野变窄，关系空间被烧穿。",
-          "嗔常以‘我有理’的形式出现，尤其需要正念照见。"
-        ],
-        misconceptions:[
-          "把嗔当力量，把温柔当软弱。",
-          "把忍辱当讨好。"
-        ],
-        practice:[
-          "嗔起先护身口：不回怼、不发消息，先离开两分钟。",
-          "先松身体：放松下颌、肩、腹，再决定怎么说。"
-        ],
-        sutraExamples:[
-          { q:"怨亲平等。", src:"修心意涵（常引）" }
-        ],
-        related:["klesha","kshanti","upeksa"]
-      },
-      {
-        id:"avidya",
-        cn:"痴/无明（Avidyā）",
-        bo:"ma rig pa",
-        sk:"avidyā",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"错认缘起无我；误认有实我实法，是轮回根本燃料。",
-        explain:[
-          "无明不是智商低，而是错认：把过程当实体，把缘起当自性。",
-          "它在微细处表现为：我一定要、安全感一定要、控制一定要。"
-        ],
-        misconceptions:[
-          "把无明当笨，忽略微细执著。",
-          "以为懂空性概念就无明尽除。"
-        ],
-        practice:[
-          "每天观一个执著：它真有自性吗？",
-          "在紧张处练：我是不是在把不确定当威胁？"
-        ],
-        sutraExamples:[
-          { q:"无明缘行。", src:"十二因缘（短引）" }
-        ],
-        related:["twelve_links","middle_way","sunyata"]
-      },
-      {
-        id:"mana",
-        cn:"慢（Māna）",
-        bo:"nga rgyal",
-        sk:"māna",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"比较心的固化：优越/自卑都属于慢的形态。",
-        explain:[
-          "慢不只傲慢，也包括‘我不如人’的反面慢：都在用比较巩固自我。",
-          "慢让心无法随喜，无法真诚学习。"
-        ],
-        misconceptions:[
-          "以为只有强者才会慢。",
-          "把自卑当谦虚。"
-        ],
-        practice:[
-          "把比较转成随喜：见他人善，心说‘愿我亦得’。",
-          "练‘初学心’：承认自己可学、可改、可成长。"
-        ],
-        sutraExamples:[
-          { q:"随喜功德。", src:"大乘常用语" }
-        ],
-        related:["muditā","shraddha","virya"]
-      },
-      {
-        id:"vicikitsa",
-        cn:"疑（Vicikitsā）",
-        bo:"the tshom",
-        sk:"vicikitsā",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"让人无法入道的摇摆；合理提问是慧，拖延修行的疑是障。",
-        explain:[
-          "疑有两种：一种是求证的提问（趋向智慧）；一种是让你永远不开始的摇摆（成为障）。",
-          "修行需要验证，但也需要给实践一个窗口。"
-        ],
-        misconceptions:[
-          "把逃避修行包装成理性。",
-          "要求‘先完全确定’才行动。"
-        ],
-        practice:[
-          "给疑一个期限：先实践14天，再评估。",
-          "把问题缩小到可实验：今天做10分钟止观，看看心如何变化。"
-        ],
-        sutraExamples:[
-          { q:"信为道元。", src:"佛教常引句（短引）" }
-        ],
-        related:["shraddha","virya","mindfulness"]
-      },
-      {
-        id:"shraddha",
-        cn:"信（Śraddhā）",
-        bo:"dad pa",
-        sk:"śraddhā",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"非盲从：基于观察与体验的信心，能供给持续修行的能量。",
-        explain:[
-          "信不是迷信，而是对可证之道的信心：可信因果、可信修行路径、可信觉醒可能。",
-          "信让你在波动与挫折中不轻易放弃。"
-        ],
-        misconceptions:[
-          "把信当崇拜或依赖。",
-          "只信某人不信法与实践。"
-        ],
-        practice:[
-          "把信落到可验证：每天一小段修行，观察心是否更自由。",
-          "先信‘方法’，再信‘结果’：用实验心修。"
-        ],
-        sutraExamples:[
-          { q:"信为道元功德母。", src:"佛教常引句（短引）" }
-        ],
-        related:["vicikitsa","virya","three_jewels"]
-      },
-
-      // —— 菩萨道（四无量心/六度等） ——
-      {
-        id:"bodhicitta",
-        cn:"菩提心（Bodhicitta）",
-        bo:"byang chub sems",
-        sk:"bodhicitta",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"为利一切众生而求成佛之心：愿与行。",
-        explain:[
-          "菩提心把修行从‘我想变好’转为‘愿众生离苦得乐’。",
-          "它分愿菩提心（发愿）与行菩提心（六度等实践）。"
-        ],
-        misconceptions:[
-          "把菩提心当情绪感动或口号。",
-          "只愿不行，缺少落实。"
-        ],
-        practice:[
-          "每天一次，把一个小善行明确回向给具体人群。",
-          "遇到冲突先问：如果我以利他为轴心，会怎么做？"
-        ],
-        sutraExamples:[
-          { q:"为利有情愿成佛。", src:"菩萨道精神（意涵）" }
-        ],
-        related:["six_paramitas","four_immeasurables","dedication"]
-      },
-      {
-        id:"six_paramitas",
-        cn:"六度（Pāramitā）",
-        bo:"pha rol tu phyin pa drug",
-        sk:"pāramitā",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"布施持戒忍辱精进禅定智慧：把利他落到行动的纲要。",
-        explain:[
-          "六度是菩萨行的实践框架：布施松贪、持戒不害、忍辱护心、精进持续、禅定摄心、智慧破执。",
-          "六度之所以是‘度’，在于以般若与回向护持，不落我执。"
-        ],
-        misconceptions:[
-          "把六度当道德表演。",
-          "只修外在行为，不修内在动机。"
-        ],
-        practice:[
-          "每天选一度做1%：给一点、忍一下、静三分钟。",
-          "做完立刻回向，避免我慢。"
-        ],
-        sutraExamples:[
-          { q:"应无所住而行布施。", src:"《金刚经》（短引意涵）" }
-        ],
-        related:["dana","sila_paramita","kshanti","virya","dhyana_paramita","prajna_paramita"]
-      },
-      {
-        id:"dana",
-        cn:"布施（Dāna）",
-        bo:"sbyin pa",
-        sk:"dāna",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"松开抓取：财施、法施、无畏施。",
-        explain:[
-          "布施不只给钱，也包括法施与无畏施。它在根本上训练：松开抓取与匮乏感。",
-          "布施的清净在于动机：不求交换、不求控制。"
-        ],
-        misconceptions:[
-          "把布施当交易求回报。",
-          "用布施换取优越感。"
-        ],
-        practice:[
-          "练‘无痕布施’：不给对方压力，不留人情债。",
-          "从小处：分享时间、耐心与安全感。"
-        ],
-        sutraExamples:[
-          { q:"应无所住而行布施。", src:"《金刚经》（短引）" }
-        ],
-        related:["raga","six_paramitas","dedication"]
-      },
-      {
-        id:"sila_paramita",
-        cn:"持戒（作为六度）",
-        bo:"tshul khrims (pha rol)",
-        sk:"śīla",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"以不害为基础的利他生活方式：让你更可靠、更清净。",
-        explain:[
-          "作为六度的持戒，更强调‘以不害为基础的利他生活方式’：让你成为可依靠的人。",
-          "持戒使心更清净，更能承载禅定与智慧。"
-        ],
-        misconceptions:[
-          "把戒当形象工程。",
-          "把戒当压抑。"
-        ],
-        practice:[
-          "先守口业与承诺：说到做到、少刺伤。",
-          "把戒当‘减少后悔’的工具。"
-        ],
-        sutraExamples:[
-          { q:"诸恶莫作。", src:"《法句经》（短引意涵）" }
-        ],
-        related:["sila","six_paramitas","mindfulness"]
-      },
-      {
-        id:"kshanti",
-        cn:"忍辱（Kṣānti）",
-        bo:"bzod pa",
-        sk:"kṣānti",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"在刺激中不被嗔心牵走：保护清明与慈悲。",
-        explain:[
-          "忍辱不是挨打不还，而是不被嗔心驱动的能力：让智慧与慈悲能工作。",
-          "忍辱保护清明，也保护关系中的空间。"
-        ],
-        misconceptions:[
-          "把忍辱当软弱或讨好。",
-          "把嗔当力量。"
-        ],
-        practice:[
-          "被冒犯时先处理身体：放松下颌、肩、腹，再回应。",
-          "先不反击：等浪头过去再沟通。"
-        ],
-        sutraExamples:[
-          { q:"忍辱为第一道。", src:"常引偈义（短引）" }
-        ],
-        related:["dvesha","six_paramitas","upeksa"]
-      },
-      {
-        id:"virya",
-        cn:"精进（Vīrya）",
-        bo:"brtson 'grus",
-        sk:"vīrya",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"持续向善向觉醒的能量：小而稳、善巧而久。",
-        explain:[
-          "精进不是硬扛，而是持续向善向觉醒的能量，包含发起、持续、欢喜、善巧。",
-          "真正的精进让心更轻快，不是更紧。"
-        ],
-        misconceptions:[
-          "把精进当自我逼迫。",
-          "三分钟热度，靠情绪驱动。"
-        ],
-        practice:[
-          "小而稳：每天固定10分钟胜过偶尔2小时。",
-          "精进与欢喜绑定：完成后允许自己随喜。"
-        ],
-        sutraExamples:[
-          { q:"勤修善法。", src:"修道品意涵（短引）" }
-        ],
-        related:["shraddha","six_paramitas","samadhi"]
-      },
-      {
-        id:"dhyana_paramita",
-        cn:"禅定（作为六度）",
-        bo:"bsam gtan (pha rol)",
-        sk:"dhyāna / samādhi",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"与觉知同在的安住：让慈悲不被情绪吞没。",
-        explain:[
-          "六度中的禅定强调‘与觉知同在’：让心稳定清明。",
-          "它使慈悲更有承载力，也使智慧更可持续。"
-        ],
-        misconceptions:[
-          "把禅定当逃避现实。",
-          "只追求舒服境界。"
-        ],
-        practice:[
-          "每天一次‘停机’：3分钟只觉呼吸与身体。",
-          "遇到冲突先停一口气再说话。"
-        ],
-        sutraExamples:[
-          { q:"正定。", src:"八正道要点（短引）" }
-        ],
-        related:["samadhi","shamatha","mindfulness"]
-      },
-      {
-        id:"prajna_paramita",
-        cn:"般若（作为六度）",
-        bo:"shes rab (pha rol)",
-        sk:"prajñā-pāramitā",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"以性空缘起护持诸行：令六度不落我执而成‘度’。",
-        explain:[
-          "般若让布施不执相、持戒不僵硬、忍辱不压抑：一切行都以空性见地护持。",
-          "般若不是聪明，而是洞见无自性，使心真正松开。"
-        ],
-        misconceptions:[
-          "把般若当口才与知识。",
-          "拿空性否定因果与责任。"
-        ],
-        practice:[
-          "做善行后回向并观‘无我无相’，防止功德生我慢。",
-          "在执著最紧处练‘缘起提问’。"
-        ],
-        sutraExamples:[
-          { q:"无智亦无得。", src:"《心经》（短引）" }
-        ],
-        related:["sunyata","two_truths","dedication"]
-      },
-      {
-        id:"four_immeasurables",
-        cn:"四无量心（慈悲喜舍）",
-        bo:"tshad med bzhi",
-        sk:"apramāṇa",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"慈愿得乐、悲愿离苦、喜随喜善、舍平等心。",
-        explain:[
-          "四无量心训练心量：慈（愿得乐）、悲（愿离苦）、喜（随喜）、舍（平等）。",
-          "它们把利他从口号变成稳定的心行能力。"
-        ],
-        misconceptions:[
-          "把舍当冷漠，把悲当崩溃。",
-          "只对喜欢的人修慈悲。"
-        ],
-        practice:[
-          "先从自己与亲友开始，再扩到陌生人，最后扩到难相处者。",
-          "每天一句：愿众生离苦得乐。"
-        ],
-        sutraExamples:[
-          { q:"愿一切众生得乐。", src:"四无量心意涵（短引）" }
-        ],
-        related:["maitri","karuna","muditā","upeksa"]
-      },
-      {
-        id:"maitri",
-        cn:"慈（Maitrī）",
-        bo:"byams pa",
-        sk:"maitrī",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"愿众生得乐的心；不是纵容，而是希望真正得益。",
-        explain:[
-          "慈不是讨好，而是希望对方得到真正利益（包括离开恶业与迷惑）。",
-          "慈也应包含自己：对自己温柔，才能对他人稳定。"
-        ],
-        misconceptions:[
-          "把慈当无底线。",
-          "对自己苛刻却对外装慈。"
-        ],
-        practice:[
-          "对自己说：愿我安稳清明。",
-          "遇人起评判时，先想：他也想快乐，只是方法错了。"
-        ],
-        sutraExamples:[
-          { q:"愿一切众生得乐。", src:"四无量心意涵（短引）" }
-        ],
-        related:["four_immeasurables","upeksa","karuna"]
-      },
-      {
-        id:"karuna",
-        cn:"悲（Karuṇā）",
-        bo:"snying rje",
-        sk:"karuṇā",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"见众生苦而愿其离苦：稳定而有行动力的柔软。",
-        explain:[
-          "悲不是情绪崩溃，而是看见苦时仍能保持清明与行动力。",
-          "悲的成熟表现为：能帮助而不被拖垮。"
-        ],
-        misconceptions:[
-          "悲=同情到被拖垮。",
-          "悲=替人背一切。"
-        ],
-        practice:[
-          "先稳住呼吸与身体，再做一件可行的小帮助。",
-          "把抱怨转为行动：能做一件就做一件。"
-        ],
-        sutraExamples:[
-          { q:"大悲为根本。", src:"大乘常用语（短引）" }
-        ],
-        related:["four_immeasurables","bodhicitta","upeksa"]
-      },
-      {
-        id:"muditā",
-        cn:"喜（Muditā）",
-        bo:"dga' ba",
-        sk:"muditā",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"随喜他人善与乐：对治嫉妒与比较心。",
-        explain:[
-          "随喜不是虚伪恭维，而是真诚承认他人的善与成就，并让心一起开阔。",
-          "随喜能对治慢与嫉妒，让福德增长更稳。"
-        ],
-        misconceptions:[
-          "随喜=拍马屁。",
-          "随喜会让自己变弱。"
-        ],
-        practice:[
-          "每天找一件别人做得好的事，真诚随喜一次。",
-          "比较心起时，立刻转一句随喜。"
-        ],
-        sutraExamples:[
-          { q:"随喜功德。", src:"大乘常用语（短引）" }
-        ],
-        related:["mana","four_immeasurables","bodhicitta"]
-      },
-      {
-        id:"upeksa",
-        cn:"舍（Upekṣā）",
-        bo:"btang snyoms",
-        sk:"upekṣā",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"平等心：不被亲疏爱憎绑架；不是冷漠而是稳定。",
-        explain:[
-          "舍不是不在乎，而是不被亲疏爱憎绑架：能稳定、公正、可承载慈悲。",
-          "舍让你在冲突中不被情绪绑架，从而更有效地利益人。"
-        ],
-        misconceptions:[
-          "舍=冷漠。",
-          "平等=对所有人同样亲密。"
-        ],
-        practice:[
-          "对难相处者练一句：他也想快乐，只是方法错了。",
-          "在偏爱/偏恨出现时，先回到身体与呼吸。"
-        ],
-        sutraExamples:[
-          { q:"怨亲平等。", src:"修心意涵（短引）" }
-        ],
-        related:["four_immeasurables","dvesha","mindfulness"]
-      },
-
-      // —— 实修辅助（但仍属基础名相/通用法门） ——
-      {
-        id:"dedication",
-        cn:"回向（Pariṇāmanā）",
-        bo:"bsngo ba",
-        sk:"pariṇāmanā",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"把功德导向众生与菩提，防止落入我执与我慢。",
-        explain:[
-          "回向让善行不被我执‘占有’，也让功德更稳更广。",
-          "回向不是转账，而是扩心量：愿此善行成为众生与觉醒的因。"
-        ],
-        misconceptions:[
-          "回向像转账，给出去就没了。",
-          "不回向就‘丢功德’而生恐惧。"
-        ],
-        practice:[
-          "任何善行后立刻一句回向：愿众生离苦得乐。",
-          "回向时把范围放大：从家人扩到一切众生。"
-        ],
-        sutraExamples:[
-          { q:"愿以此功德，庄严佛净土。", src:"回向偈（通行）" }
-        ],
-        related:["bodhicitta","prajna_paramita","dana"]
-      },
-      {
-        id:"confession",
-        cn:"忏悔/净罪",
-        bo:"bshags pa / sbyang ba",
-        sk:"—",
-        group:"基础名相",
-        subgroup:"修学路径",
-        brief:"承认过失并立志不再重复：让心从否认与自责中解脱。",
-        explain:[
-          "忏悔的要点不是羞辱自己，而是恢复清明与担当：承认、对治、改正、恢复。",
-          "常用四力框架（不同传承表述略异）：依止、破恶、对治、恢复。"
-        ],
-        misconceptions:[
-          "忏悔=自我羞辱。",
-          "念一遍就清零，不改变行为。"
-        ],
-        practice:[
-          "忏悔要具体：哪件事、伤害何处、下次怎么做。",
-          "把‘补救行动’作为忏悔的一部分。"
-        ],
-        sutraExamples:[
-          { q:"罪从心起将心忏。", src:"忏法常用句（短引）" }
-        ],
-        related:["sila","mindfulness","karma"]
-      },
-
-      // —— 继续补齐：把“简表里的关键概念”扩成条目（50条达成） ——
-      // 为避免信息重复过重：以下条目保持同一结构，但更聚焦“名相”与“抓手”。
-
-      { // 29
-        id:"contact",
-        cn:"触（Sparśa）",
-        bo:"reg pa",
-        sk:"sparśa",
-        group:"基础名相",
-        subgroup:"身心结构",
-        brief:"根尘识和合的接触点：许多烦恼从此点火。",
-        explain:[
-          "触是根、尘、识和合时的接触点：信息进入系统的那一刻。",
-          "在十二因缘中，触之后紧接受（感受），最适合练正念的‘断点’。"
-        ],
-        misconceptions:[
-          "以为问题在对象，而不是在触后的反应链。",
-          "忽略身体层面的触发。"
-        ],
-        practice:[
-          "一有刺激先回身体：脚掌、肩颌、呼吸。",
-          "练‘触即知触’，不急着评价。"
-        ],
-        sutraExamples:[
-          { q:"此有故彼有。", src:"缘起经典句（意涵）" }
-        ],
-        related:["twelve_links","feeling","mindfulness"]
-      },
-      { // 30
-        id:"feeling",
-        cn:"受（Vedanā）",
-        bo:"tshor ba",
-        sk:"vedanā",
-        group:"基础名相",
-        subgroup:"身心结构",
-        brief:"苦、乐、不苦不乐三受：爱取常从受上长出来。",
-        explain:[
-          "受是苦乐不苦不乐三类感受。受本身不是问题，问题在受后生爱（抓取/排斥）。",
-          "能看见受的生灭，就能让受不必变成爱取。"
-        ],
-        misconceptions:[
-          "把受当必须立刻处理的命令。",
-          "把不苦不乐当无聊而求刺激。"
-        ],
-        practice:[
-          "给感受命名：乐受/苦受/中性受。",
-          "练‘允许受存在’而不立刻执行冲动。"
-        ],
-        sutraExamples:[
-          { q:"观受是苦。", src:"四念处类教法（短引）" }
-        ],
-        related:["twelve_links","tanha","vipashyana"]
-      },
-      { // 31
-        id:"tanha",
-        cn:"爱（Tṛṣṇā）",
-        bo:"sred pa",
-        sk:"tṛṣṇā",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"对受的渴求：想抓住乐、赶走苦、忽视中性。",
-        explain:[
-          "爱是对感受的渴求：抓住乐、排斥苦、对中性不耐烦。",
-          "它是集谛核心之一：苦的燃料。"
-        ],
-        misconceptions:[
-          "把爱只当浪漫情感。",
-          "忽略微细的‘控制欲’也是爱。"
-        ],
-        practice:[
-          "在渴求出现时问：我是在求快乐，还是在逃不安？",
-          "用呼吸把冲动拖慢30秒。"
-        ],
-        sutraExamples:[
-          { q:"爱为苦本。", src:"四谛意涵（短引）" }
-        ],
-        related:["feeling","upadana","dukkha"]
-      },
-      { // 32
-        id:"upadana",
-        cn:"取（Upādāna）",
-        bo:"len pa",
-        sk:"upādāna",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"在爱之上更深的抓取：把对象变成‘我的’或‘必须’。",
-        explain:[
-          "取比爱更深：不仅想要，还把它变成‘我的身份/我的安全/我必须’。",
-          "取使轮回加速：因为它强化‘我与我的’的固化。"
-        ],
-        misconceptions:[
-          "以为只要不贪就没有取。",
-          "忽略‘观点执取’也是取。"
-        ],
-        practice:[
-          "当你说‘必须’时，停一下：这是不是取？",
-          "练放下观点：先理解对方，再表达自己。"
-        ],
-        sutraExamples:[
-          { q:"取缘有。", src:"十二因缘（短引）" }
-        ],
-        related:["tanha","bhava","anatman"]
-      },
-      { // 33
-        id:"bhava",
-        cn:"有（Bhava）",
-        bo:"srid pa",
-        sk:"bhava",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"业力与取相续的‘成势’：让某种存在方式持续滚动。",
-        explain:[
-          "有可理解为：在取的推动下，业力形成某种‘存在方式’的势能与惯性。",
-          "它使心倾向重复同一套模式：同样的触发、同样的反应。"
-        ],
-        misconceptions:[
-          "把有理解成单纯‘存在’而非惯性成势。",
-          "忽略当下就能转势。"
-        ],
-        practice:[
-          "识别自己最常见的‘模式回路’，在最早处截断。",
-          "把生活做得更清净（戒）以减弱成势。"
-        ],
-        sutraExamples:[
-          { q:"有缘生。", src:"十二因缘（短引意涵）" }
-        ],
-        related:["upadana","karma","samsara"]
-      },
-
-      // 34-36：三苦拆分（更像“名相词典”的条目）
-      {
-        id:"dukkha_dukkha",
-        cn:"苦苦",
-        bo:"sdug bsngal gyi sdug bsngal",
-        sk:"—",
-        group:"基础名相",
-        subgroup:"见地框架",
-        brief:"直接痛苦：病、失、伤、挫等明显的苦。",
-        explain:[
-          "苦苦是最直观的痛苦：身体疼痛、情绪崩溃、失去与挫折。",
-          "佛法不否认苦苦，而是教你在苦中不再加第二支箭（自责、怨恨）。"
-        ],
-        misconceptions:[
-          "以为修行就不该痛苦。",
-          "把痛苦都怪外界。"
-        ],
-        practice:[
-          "先安身：呼吸、放松、饮水、睡眠。",
-          "把‘感受’与‘故事’分开：减少第二支箭。"
-        ],
-        sutraExamples:[
-          { q:"观受是苦。", src:"四念处类教法（短引）" }
-        ],
-        related:["dukkha","mindfulness","klesha"]
-      },
-      {
-        id:"viparinama_dukkha",
-        cn:"坏苦",
-        bo:"'gyur ba'i sdug bsngal",
-        sk:"—",
-        group:"基础名相",
-        subgroup:"见地框架",
-        brief:"快乐变质之苦：乐不稳、必变、终失。",
-        explain:[
-          "坏苦是快乐变质：越想抓住乐，越紧张；乐一变，苦就生。",
-          "看见坏苦，能减少对乐的执取，乐反而更清净。"
-        ],
-        misconceptions:[
-          "把坏苦当否定快乐。",
-          "以为只要更多快乐就能解决。"
-        ],
-        practice:[
-          "乐起时观无常：允许它来，也允许它走。",
-          "做完开心事回向与随喜，减少占有感。"
-        ],
-        sutraExamples:[
-          { q:"诸行无常。", src:"三法印（通行）" }
-        ],
-        related:["impermanence","tanha","upeksa"]
-      },
-      {
-        id:"sankhara_dukkha",
-        cn:"行苦",
-        bo:"'du byed kyi sdug bsngal",
-        sk:"—",
-        group:"基础名相",
-        subgroup:"见地框架",
-        brief:"无常推动下的隐性紧绷：即使不苦不乐也不安稳。",
-        explain:[
-          "行苦是更微细的不圆满：万法流动，心下意识紧抓控制与确定。",
-          "行苦解释了：为什么‘没事’也会焦虑。"
-        ],
-        misconceptions:[
-          "把行苦当矫情。",
-          "只在大痛苦时才修。"
-        ],
-        practice:[
-          "平静时练细无常：觉察呼吸与感受的细微变化。",
-          "用正念把‘隐性紧张’照亮。"
-        ],
-        sutraExamples:[
-          { q:"诸行皆苦。", src:"三法印（通行）" }
-        ],
-        related:["impermanence","mindfulness","shamatha"]
-      },
-
-      // 37-40：三毒与对治（更贴“基础名相”）
-      {
-        id:"three_poisons",
-        cn:"三毒（贪嗔痴）",
-        bo:"dug gsum",
-        sk:"—",
-        group:"基础名相",
-        subgroup:"心行烦恼",
-        brief:"轮回的核心染污：抓取、排斥、错认。",
-        explain:[
-          "三毒是轮回的核心染污：贪（抓取）、嗔（排斥）、痴（错认）。",
-          "对治思路常是：以布施对贪、以慈悲忍辱对嗔、以智慧对痴。"
-        ],
-        misconceptions:[
-          "把三毒当道德罪名而非心理机制。",
-          "只压不观，越压越强。"
-        ],
-        practice:[
-          "先命名：这是贪/嗔/痴哪一个？",
-          "对贪做布施，对嗔做慈悲，对痴做缘起提问。"
-        ],
-        sutraExamples:[
-          { q:"断贪嗔痴。", src:"修行要点（意涵）" }
-        ],
-        related:["raga","dvesha","avidya"]
-      },
-      {
-        id:"compassion_root",
-        cn:"大悲",
-        bo:"snying rje chen po",
-        sk:"mahākaruṇā",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"见众生苦而不退：慈悲更深更广的稳定力量。",
-        explain:[
-          "大悲不是情绪化同情，而是在看见苦时依然保持清明与行动力。",
-          "它是菩萨道的根：越修越不以自我为中心。"
-        ],
-        misconceptions:[
-          "大悲=替人背一切。",
-          "大悲=圣母心。"
-        ],
-        practice:[
-          "先稳住自己，再帮助他人：这是大悲的稳定面。",
-          "把抱怨转为一件可行的帮助。"
-        ],
-        sutraExamples:[
-          { q:"大悲为根本。", src:"大乘常用语（短引）" }
-        ],
-        related:["karuna","bodhicitta","upeksa"]
-      },
-      {
-        id:"equanimity",
-        cn:"平等心",
-        bo:"mnyam nyid",
-        sk:"—",
-        group:"基础名相",
-        subgroup:"菩萨道",
-        brief:"不
+        function init() {
+            const container = document.getElementById('mainContainer');
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'term-card';
+                card.innerHTML = `
+                    <div class="term-header">
+                        <div class="title-group">
+                            <span class="term-title">${item.t}</span>
+                            <span class="term-short-quote">${item.q}</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="term-content">
+                        <div class="inner-padding">
+                            <div class="section"><span class="label">【解释】</span><div class="text">${item.e}</div></div>
+                            <div class="section"><span class="label">【常见误解】</span><div class="text warning">${item.m}</div></div>
+                            <div class="section"><span class="label">【修持提示】</span><div class="text practice">${item.p}</div></div>
+                        </div>
+                    </div>
+                `;
+                card.querySelector('.term-header').onclick = () => {
+                    const isActive = card.classList.contains('active');
+                    document.querySelectorAll('.term-card').forEach(c => c.classList.remove('active'));
+                    if (!isActive) card.classList.add('active');
+                };
+                container.appendChild(card);
+            });
+        }
+        init();
+    </script>
+</body>
+</html>
